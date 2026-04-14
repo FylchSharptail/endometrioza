@@ -1,0 +1,331 @@
+<html lang="pl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root { --bg: #f7f8fa; --surface: #fff; --text: #1c1f26; --muted: #71767e; --accent: #1b3a5c; --accent-light: #e6edf5; --border: #dde1e7; --radius: 10px; --warn: #8b6914; --warn-bg: #fdf6e3; --purple: #7c5cbf; --purple-bg: #faf8ff; --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04); --shadow-md: 0 8px 24px rgba(27, 58, 92, 0.08); }
+
+* { margin: 0px; padding: 0px; box-sizing: border-box; }
+
+body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.72; font-size: 15px; -webkit-font-smoothing: antialiased; text-rendering: optimizelegibility; }
+
+.hero { background: linear-gradient(rgb(27, 58, 92) 0%, rgb(35, 72, 111) 100%); color: rgb(255, 255, 255); padding: 2.7rem 2rem 1.35rem; position: relative; }
+
+.hero-inner { max-width: 920px; margin: 0px auto; }
+
+.hero h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.18; }
+
+.hero .sub { font-size: 0.96rem; opacity: 0.84; margin-top: 0.35rem; max-width: 760px; }
+
+.hero-meta { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 0.95rem; font-size: 0.78rem; opacity: 0.72; }
+
+.wrap { max-width: 920px; margin: 0px auto; padding: 0px 2rem 4rem; }
+
+nav.toc { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.3rem; margin-bottom: 2rem; font-size: 0.86rem; box-shadow: var(--shadow-sm); }
+
+nav.toc .t { font-weight: 600; color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+
+nav.toc ol { margin: 0px; padding-left: 1.2rem; }
+
+nav.toc li { margin-bottom: 0.2rem; }
+
+nav.toc a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted rgba(27, 58, 92, 0.55); }
+
+nav.toc a:hover { border-bottom-style: solid; }
+
+h2 { font-size: 1.18rem; font-weight: 700; color: var(--accent); margin: 3rem 0px 0.9rem; padding-bottom: 0.35rem; border-bottom: 2px solid var(--accent-light); }
+
+h2 .n { color: var(--muted); font-weight: 500; margin-right: 0.3rem; }
+
+h3 { font-size: 1.02rem; font-weight: 600; margin: 1.7rem 0px 0.45rem; color: rgb(36, 52, 70); }
+
+p { margin-bottom: 0.85rem; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+a:hover { text-decoration: none; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.15rem 1.3rem; margin: 0.8rem 0px; box-shadow: var(--shadow-sm); }
+
+.card b { display: block; margin-bottom: 0.35rem; }
+
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin: 1rem 0px 1.15rem; }
+
+.card-grid .card { margin: 0px; }
+
+.stat-row { display: flex; gap: 0.85rem; margin: 1.1rem 0px 1.2rem; flex-wrap: wrap; }
+
+.stat-card { flex: 1 1 0%; min-width: 200px; padding: 1rem 1rem 0.9rem; border-radius: var(--radius); text-align: center; background: linear-gradient(180deg, #f9fbfd 0%, var(--accent-light) 100%); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+
+.stat-card .big { font-size: 1.95rem; font-weight: 700; color: var(--accent); line-height: 1.05; }
+
+.stat-card .lbl { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+
+.stat-card .src { font-size: 0.72rem; margin-top: 0.4rem; color: var(--muted); }
+
+.note, .warn { padding: 0.8rem 1rem; margin: 0.95rem 0px; font-size: 0.88rem; border-radius: 0 var(--radius) var(--radius) 0; box-shadow: var(--shadow-sm); }
+
+.note { background: rgb(242, 247, 251); border-left: 4px solid var(--accent); }
+
+.note em { font-style: normal; font-weight: 600; color: var(--accent); }
+
+.warn { background: var(--warn-bg); border-left: 4px solid var(--warn); }
+
+.featured { background: rgb(255, 255, 255); border-top: 1px solid rgb(201, 216, 234); border-right: 1px solid rgb(201, 216, 234); border-bottom: 1px solid rgb(201, 216, 234); border-image: initial; border-left: 6px solid var(--accent); border-radius: var(--radius); padding: 1.25rem 1.35rem 1.15rem; margin: 1.15rem 0px 2rem; box-shadow: var(--shadow-md); }
+
+.featured .big { font-size: 0.95rem; font-weight: 700; color: var(--accent); line-height: 1.2; letter-spacing: 0.03em; text-transform: uppercase; }
+
+.featured p { margin-top: 0.6rem; margin-bottom: 0px; font-size: 0.98rem; line-height: 1.78; }
+
+table { width: 100%; border-collapse: collapse; margin: 0.9rem 0px 1.15rem; font-size: 0.86rem; background: var(--surface); box-shadow: var(--shadow-sm); }
+
+th { background: var(--accent-light); text-align: left; padding: 0.55rem 0.65rem; font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.79rem; color: var(--accent); }
+
+td { padding: 0.52rem 0.65rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+
+.ok { color: rgb(26, 107, 58); font-weight: 600; }
+
+.bad { color: rgb(168, 39, 26); font-weight: 600; }
+
+.mid { color: var(--warn); font-weight: 600; }
+
+ul:not(.rec) { margin: 0.35rem 0px 0.9rem 1.2rem; }
+
+li { margin-bottom: 0.28rem; }
+
+ol.rec { list-style: none; padding: 0px; counter-reset: r 0; margin: 1.1rem 0px 0px; }
+
+ol.rec li { counter-increment: r 1; padding: 0.75rem 1rem 0.75rem 3rem; margin-bottom: 0.55rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); position: relative; font-size: 0.9rem; box-shadow: var(--shadow-sm); }
+
+ol.rec li::before { content: counter(r); position: absolute; left: 0.8rem; top: 0.72rem; background: var(--accent); color: rgb(255, 255, 255); width: 1.45rem; height: 1.45rem; border-radius: 50%; text-align: center; line-height: 1.45rem; font-size: 0.76rem; font-weight: 700; }
+
+.sources { margin-top: 3rem; padding-top: 1.6rem; border-top: 2px solid var(--border); }
+
+.si { margin-bottom: 1rem; padding-left: 1.5rem; position: relative; font-size: 0.84rem; }
+
+.si::before { content: attr(data-n); position: absolute; left: 0px; font-weight: 700; color: var(--accent); }
+
+.ev { font-size: 0.75rem; color: var(--muted); font-style: italic; }
+
+footer { margin-top: 3.2rem; padding-top: 0.9rem; border-top: 1px solid var(--border); font-size: 0.74rem; color: var(--muted); text-align: center; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 0px 1rem 3rem; }
+  .hero { padding: 1.8rem 1rem 1rem; }
+  .hero h1 { font-size: 1.4rem; }
+  .hero .sub { font-size: 0.9rem; }
+  .card-grid { grid-template-columns: 1fr; }
+  .stat-row { flex-direction: column; }
+  .featured { padding: 1rem 1rem 0.95rem; }
+}
+
+@media print {
+  .hero { print-color-adjust: exact; background: var(--accent) !important; }
+  body { font-size: 13px; }
+}
+
+.ported-box { background: var(--purple-bg); border-left: 2px solid rgba(124, 92, 191, 0.6); padding: 0.72rem 0.95rem; margin: 0.9rem 0px; font-size: 0.88rem; border-radius: 0 var(--radius) var(--radius) 0; }
+
+.ported-box .pb-label { font-weight: 700; color: rgba(124, 92, 191, 0.92); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.28rem; }
+
+.ported-box em { font-style: normal; font-weight: 600; color: var(--purple); }</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endometrioza, PCOS i zdrowie hormonalne — Huberman Lab</title>
+
+</head><body><div class="hero"><div class="hero-inner">
+<h1>Endometrioza, PCOS i zdrowie hormonalne kobiet</h1>
+<div class="sub">Podsumowanie odcinka Huberman Lab z udziałem Dr Thaïs Aliabadi, MD</div>
+<div class="hero-meta"><span>Huberman Lab · odcinek 256</span><span>24 listopada 2025 · 3h 07min</span><span>Dr Thaïs Aliabadi, MD · ginekolog, chirurg · Cedars-Sinai, Los Angeles</span></div>
+</div></div>
+
+<div class="wrap">
+
+<div class="featured"><div class="big">Kluczowy przekaz odcinka</div>
+<p>Endometrioza i PCOS to główne przyczyny niepłodności na świecie. Bolesne miesiączki zakłócające codzienne życie nie są normalne. Średni czas do postawienia prawidłowej diagnozy endometriozy wynosi 9–11 lat, a pacjentki odwiedzają średnio 5–10 lekarzy zanim ktoś postawi właściwą diagnozę. „Jeśli masz bolesne miesiączki, traktuj to jako endometriozę, dopóki nie zostanie wykluczona." — Dr Aliabadi</p></div>
+
+<nav class="toc"><div class="t">Spis treści</div>
+<ol>
+<li><a href="#endo">Endometrioza — czym jest i jak działa</a></li>
+<li><a href="#objawy">Objawy alarmowe</a></li>
+<li><a href="#diagnostyka">Diagnostyka</a></li>
+<li><a href="#leczenie">Leczenie endometriozy</a></li>
+<li><a href="#plodnosc">Endometrioza a płodność</a></li>
+<li><a href="#pcos">PCOS — zespół policystycznych jajników</a></li>
+<li><a href="#leczenie-pcos">Leczenie PCOS</a></li>
+<li><a href="#rak">Rak piersi</a></li>
+<li><a href="#pmdd">PMDD</a></li>
+<li><a href="#checklista">Praktyczna checklista</a></li>
+</ol>
+</nav>
+
+<div class="stat-row">
+<div class="stat-card"><div class="big">9–11 lat</div><div class="lbl">średni czas do diagnozy endometriozy</div></div>
+<div class="stat-card"><div class="big">15–20%</div><div class="lbl">kobiet w wieku rozrodczym ma PCOS</div></div>
+<div class="stat-card"><div class="big">85%</div><div class="lbl">raków piersi występuje bez historii rodzinnej</div></div>
+</div>
+
+<h2 id="endo"><span class="n">1.</span> Endometrioza — czym jest i jak działa</h2>
+
+<p>Tkanka podobna do wyściółki macicy (endometrium) rośnie poza macicą: na jajnikach, jajowodach, pęcherzu, jelitach. Co miesiąc, gdy estrogen stymuluje wyściółkę macicy, stymuluje też te ektopowe ogniska. Gdy nie dochodzi do ciąży, ogniska krwawią do wnętrza miednicy.</p>
+
+<div class="card-grid">
+<div class="card"><b>Konsekwencje</b>Przewlekły stan zapalny, bliznowacenie i zrosty, uszkodzenie jajowodów, niszczenie jajeczek (zarówno ich liczby, jak i jakości).</div>
+<div class="card"><b>Agresywne zachowanie</b>Ogniska tworzą własne naczynia krwionośne i włókna nerwowe. Zachowują się jak nowotwór, ale nim nie są.</div>
+</div>
+
+<div class="ported-box">
+<span class="pb-label">Zasada Dr Aliabadi</span>
+„Jeśli masz bolesne miesiączki, traktuj to jako endometriozę, dopóki nie zostanie wykluczona."
+</div>
+
+<h2 id="objawy"><span class="n">2.</span> Objawy alarmowe</h2>
+
+<ul>
+<li>Ból miesiączkowy powodujący opuszczanie szkoły lub pracy, leżenie w łóżku</li>
+<li>Ból podczas głębokiej penetracji w trakcie stosunku</li>
+<li>Bolesne wypróżnienia w okolicy miesiączki</li>
+<li>Ciągłe wzdęcia</li>
+<li>Nawracające objawy pęcherza / zakażeń układu moczowego z negatywnymi posiewami</li>
+<li>Ból promieniujący do nóg</li>
+<li>Ból narastający z roku na rok, obejmujący coraz większą część cyklu</li>
+</ul>
+
+<div class="note"><em>Ważne:</em> Stadium endometriozy NIE koreluje z nasileniem bólu. Stadium 1 może powodować straszliwy ból, a stadium 4 dawać łagodne objawy.</div>
+
+<h2 id="diagnostyka"><span class="n">3.</span> Diagnostyka</h2>
+
+<table>
+<tbody>
+<tr><th>Metoda</th><th>Możliwości</th><th>Ograniczenia</th></tr>
+<tr><td>Test z krwi</td><td class="bad">Brak wiarygodnego testu</td><td>CA-125 ma niską czułość i swoistość</td></tr>
+<tr><td>USG miednicy</td><td>Może wykryć endometriomę (torbiel czekoladową)</td><td>Prawidłowy wynik nie wyklucza endometriozy, szczególnie we wczesnych stadiach</td></tr>
+<tr><td>MRI miednicy</td><td class="ok">Lepsze narzędzie obrazowe</td><td>Lepsze dla głęboko naciekających zmian, ale nie wykrywa powierzchownych</td></tr>
+<tr><td>Laparoskopia z wycięciem</td><td class="ok">Złoty standard diagnostyki i leczenia</td><td>Zabieg chirurgiczny, wymaga doświadczonego specjalisty</td></tr>
+</tbody>
+</table>
+
+<h3>Co zrobić samodzielnie</h3>
+<ol class="rec">
+<li><b>Prowadź dziennik objawów</b> — ból, cykl, wzdęcia, ból przy stosunku. Wzorce stają się widoczne po kilku miesiącach.</li>
+<li><b>Poproś o badanie AMH</b> (hormon antymüllerowski) — prosty test z krwi pozwalający ocenić rezerwę jajnikową.</li>
+<li><b>Poproś o USG miednicy</b> — powinno być częścią corocznego badania ginekologicznego.</li>
+<li><b>Jeśli objawy są ciężkie, proś o MRI miednicy</b> — lepsze niż USG przy podejrzeniu głębszych zmian.</li>
+<li><b>Szukaj specjalisty od endometriozy</b> — nie każdy ginekolog ma doświadczenie w diagnostyce i leczeniu endo.</li>
+</ol>
+
+<h2 id="leczenie"><span class="n">4.</span> Leczenie endometriozy</h2>
+
+<h3>Podejście krok po kroku</h3>
+
+<div class="card"><b>Krok 1 — Supresja hormonalna (pierwsza linia)</b>
+Ciągłe tabletki antykoncepcyjne (estrogen + progesteron) lub wkładka progestagenowa (Mirena, Kyleena). Cel: obniżenie poziomu estrogenu, który karmi ogniska endometriozy.</div>
+
+<div class="card"><b>Krok 2 — Chirurgia (gdy supresja nie wystarcza)</b>
+Laparoskopowe <strong>wycięcie</strong> (excision) ognisk, nie przypalanie (ablacja). Zdaniem Dr Aliabadi tylko 1 na 100 ginekologów jest przeszkolony w laparoskopowej chirurgii endometriozy. Szukaj chirurga, który robi to regularnie.</div>
+
+<div class="card"><b>Krok 3 — Po operacji: zawsze supresja hormonalna</b>
+Bez supresji choroba wraca. Często wkładka progestagenowa zakładana tuż po operacji. W ciężkich przypadkach (stadium 3–4): antagoniści GnRH (Orilissa, Myfembree) na 6 miesięcy do 2 lat.</div>
+
+<div class="warn"><strong>Ciąża nie jest leczeniem endometriozy.</strong> Może tymczasowo złagodzić objawy (supresja owulacji, wysoki progesteron), ale ogniska przetrwają i objawy wracają po porodzie.</div>
+
+<h2 id="plodnosc"><span class="n">5.</span> Endometrioza a płodność</h2>
+
+<p>Endometrioza niszczy zarówno liczbę, jak i jakość jajeczek. Środowisko w miednicy staje się toksyczne: jajowody mogą być zablokowane, zapalne komórki atakują plemniki i zarodki. Zwiększa się ryzyko ciąży pozamacicznej i poronień.</p>
+
+<div class="card-grid">
+<div class="card"><b>Rezerwa jajnikowa</b>Można mieć 30 lat i rezerwę jajnikową 40-latki (lub zero jajeczek). Poznaj swoje AMH jak najwcześniej.</div>
+<div class="card"><b>Choroby autoimmunologiczne</b>Kobiety z endometriozą mają ok. 30% szans na współistniejącą chorobę autoimmunologiczną. Przy staraniach o dziecko lub po poronieniach warto poprosić o pełny panel autoimmunologiczny.</div>
+</div>
+
+<div class="ported-box">
+<span class="pb-label">Zalecenie z odcinka</span>
+Rozważ zamrożenie jajeczek, szczególnie jeśli masz endometriozę lub obniżone AMH. Im młodsze jajeczko w momencie zamrożenia, tym wyższa jego jakość.
+</div>
+
+<h2 id="pcos"><span class="n">6.</span> PCOS — zespół policystycznych jajników</h2>
+
+<p>PCOS dotyka 15–20% kobiet w wieku rozrodczym. Zdaniem Dr Aliabadi ponad 50% pacjentek z PCOS może mieć jednocześnie endometriozę.</p>
+
+<h3>Diagnoza — 2 z 3 kryteriów (Rotterdam)</h3>
+
+<div class="card-grid">
+<div class="card"><b>1. Objawy wysokich androgenów</b>Trądzik, owłosienie twarzy i ciała (hirsutyzm), łysienie typu męskiego. Normalne testosteron we krwi nie wyklucza PCOS.</div>
+<div class="card"><b>2. Zaburzenia owulacji</b>Nieregularne miesiączki, cykle dłuższe niż 35 dni, mniej niż 8 miesiączek rocznie. 70–80% pacjentek nie owuluje mimo regularnych krwawień.</div>
+</div>
+
+<div class="card"><b>3. Obraz PCOS na USG lub podwyższone AMH</b>
+Policystyczne jajniki w badaniu ultrasonograficznym lub podwyższony poziom hormonu antymüllerowskiego.</div>
+
+<div class="note"><em>Ważne:</em> Można mieć PCOS bez nadwagi — 25% pacjentek z PCOS jest szczupłych. PCOS to zaburzenie wieloukładowe: oś mózg-jajnik, insulinooporność, przewlekły stan zapalny, genetyka.</div>
+
+<h2 id="leczenie-pcos"><span class="n">7.</span> Leczenie PCOS</h2>
+
+<h3>Pięć filarów</h3>
+
+<ol class="rec">
+<li><b>Styl życia</b> — sen (priorytet), redukcja stresu, regularne ćwiczenia, spacer po posiłkach (pomaga regulować glukozę), dieta niskozapalna.</li>
+<li><b>Suplementy</b> — inozytol (myo + D-chiro), witamina D, koenzym Q10, kurkumina, chrom, liść morwy.</li>
+<li><b>Metformina</b> — 750 mg 2× dziennie (zaczynając powoli od dawki wieczornej), poprawia insulinowrażliwość.</li>
+<li><b>Leki GLP-1</b> (np. Ozempic, Trulicity) — regulują insulinę, redukują stan zapalny, pomagają w utracie wagi. Dr Aliabadi stosuje je u pacjentek z PCOS od 2014 roku.</li>
+<li><b>Letrozol / Klomifen</b> — jeśli starasz się o ciążę i nie dochodzi do owulacji. Letrozol jest obecnie pierwszą linią indukcji owulacji w PCOS.</li>
+</ol>
+
+<table>
+<tbody>
+<tr><th>Suplement</th><th>Mechanizm</th></tr>
+<tr><td><strong>Inozytol</strong> (myo + D-chiro)</td><td>Poprawia sygnalizację insulinową, wspiera owulację. Najlepiej przebadany suplement w PCOS.</td></tr>
+<tr><td><strong>Witamina D</strong></td><td>Niedobór częsty w PCOS. Suplementacja poprawia parametry metaboliczne.</td></tr>
+<tr><td><strong>Koenzym Q10</strong></td><td>Antyoksydant, wsparcie mitochondrialne.</td></tr>
+<tr><td><strong>Kurkumina</strong></td><td>Działanie przeciwzapalne.</td></tr>
+<tr><td><strong>Chrom</strong></td><td>Może poprawiać insulinowrażliwość.</td></tr>
+<tr><td><strong>Liść morwy</strong></td><td>Może spowalniać wchłanianie cukrów.</td></tr>
+</tbody>
+</table>
+
+<h2 id="rak"><span class="n">8.</span> Rak piersi</h2>
+
+<div class="stat-row">
+<div class="stat-card"><div class="big">85%</div><div class="lbl">kobiet z rakiem piersi <strong>nie ma</strong> historii rodzinnej</div></div>
+<div class="stat-card"><div class="big">≥ 20%</div><div class="lbl">ryzyko życiowe → obrazowanie już od 30. roku życia</div></div>
+</div>
+
+<p>Dr Aliabadi zaleca obliczenie ryzyka życiowego raka piersi za pomocą <a href="https://ibis.ikonopedia.com">Tyrer-Cuzick Risk Assessment Tool</a> (darmowy, online). Jeśli ryzyko wynosi 20% lub więcej, powinnaś mieć obrazowanie piersi (MRI + mammografia) już od 30. roku życia, nie czekając do 40.</p>
+
+<div class="note"><em>Testy genetyczne:</em> Jeśli masz rodzinną historię nowotworów (piersi, jajników, trzustki, prostaty w rodzinie), poproś o testy genetyczne. Warto znać swój status BRCA i innych genów.</div>
+
+<h2 id="pmdd"><span class="n">9.</span> PMDD — przedmiesiączkowe zaburzenie dysforyczne</h2>
+
+<p>PMDD to nie zaburzenie hormonalne w klasycznym sensie. Kobiety z PMDD mają normalne poziomy hormonów, ale ich mózg reaguje ekstremalnie na normalne wahania progesteronu i jego metabolitów (szczególnie allopregnanolonu).</p>
+
+<div class="card-grid">
+<div class="card"><b>Leczenie: SSRI pulsacyjne</b>
+SSRI (Prozac, Zoloft) tylko przez 10–14 dni przed miesiączką (faza lutealna). Nie trzeba brać ich cały miesiąc. Skuteczność potwierdzona w badaniach.</div>
+<div class="card"><b>Po 40. roku życia</b>
+Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywać na perimenopause, nie na PMDD. Warto to rozróżnić.</div>
+</div>
+
+<h2 id="checklista"><span class="n">10.</span> Praktyczna checklista</h2>
+
+<ol class="rec">
+<li><b>Poznaj swoje AMH</b> (rezerwę jajnikową) — prosty test z krwi, który każda kobieta powinna znać.</li>
+<li><b>Poproś o USG miednicy</b> na kolejnej wizycie ginekologicznej.</li>
+<li><b>Prowadź dziennik objawów</b> — ból, cykl, wzdęcia, ból przy stosunku.</li>
+<li><b>Sprawdź insulinooporność</b> (A1C, lipidy), nawet jeśli jesteś szczupła.</li>
+<li><b>Oblicz ryzyko życiowe raka piersi</b> — <a href="https://ibis.ikonopedia.com">Tyrer-Cuzick calculator</a>.</li>
+<li><b>Rozważ zamrożenie jajeczek</b> jeśli planujesz macierzyństwo w przyszłości.</li>
+<li><b>Przy endometriozie + staraniach o dziecko</b> — poproś o panel autoimmunologiczny.</li>
+<li><b>Bądź swoim własnym adwokatem zdrowia</b> — nie pozwól, by Twój ból był bagatelizowany.</li>
+</ol>
+
+<div class="sources">
+<h2 style="border:0;margin-top:0;padding:0;">Przydatne linki</h2>
+<div class="si" data-n="▸"><a href="https://ovii.com">Ovii</a> — darmowy kalkulator ryzyka PCOS (stworzony przez Dr Aliabadi)</div>
+<div class="si" data-n="▸"><a href="https://ibis.ikonopedia.com">Tyrer-Cuzick calculator</a> — kalkulator ryzyka raka piersi</div>
+<div class="si" data-n="▸"><a href="https://shemdpodcast.com">Podcast She MD</a> — podcast Dr Aliabadi o zdrowiu kobiet</div>
+<div class="si" data-n="▸"><a href="https://www.youtube.com/watch?v=hMzfGZnaPN8">Pełny odcinek Huberman Lab</a> — 3h 07min, YouTube</div>
+</div>
+
+<footer>Opracowanie na podstawie odcinka Huberman Lab z 24 listopada 2025 · Gość: Dr Thaïs Aliabadi, MD</footer>
+
+</div>
+</body></html>
