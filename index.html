@@ -78,23 +78,35 @@ sup.ref a:hover { text-decoration:underline; }
 .skip-link{position:absolute;left:-9999px;top:1rem;z-index:1000;background:#fff;color:#1b3a5c;padding:0.75rem 1rem;border:2px solid #1b3a5c;border-radius:10px;font-size:0.9rem;}
 .skip-link:focus{left:1rem;}
 a:focus-visible{outline:3px solid #1b3a5c;outline-offset:3px;border-radius:4px;}
-nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}</style>
+nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
+
+.layout{max-width:1340px;margin:0 auto}
+@media(min-width:1100px){.layout{display:grid;grid-template-columns:1fr 340px;gap:2rem;padding:0 2rem;align-items:start}.wrap{max-width:none;margin:0;padding-left:0;padding-right:0}}
+#yt-sticky{position:sticky;top:1rem}
+#yt-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--radius);box-shadow:var(--shadow-md);background:#000}
+#yt-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+#yt-collapse{display:none}
+@media(max-width:1099px){#yt-player-col{position:fixed;bottom:0;left:0;right:0;z-index:900;background:#1c1f26;box-shadow:0 -4px 16px rgba(0,0,0,.25)}#yt-sticky{position:static}#yt-wrap{padding-bottom:28%;max-height:180px}#yt-collapse{display:block;width:100%;background:#2a2d35;color:#fff;border:0;padding:.5rem;font-size:.8rem;cursor:pointer;text-align:center}#yt-player-col.collapsed #yt-wrap{display:none}main.wrap{padding-bottom:240px}}
+.ts{font-size:.72em;color:var(--accent);text-decoration:none;padding:.1em .35em;border-radius:3px;background:var(--accent-light);white-space:nowrap;cursor:pointer;margin-left:.3em;font-variant-numeric:tabular-nums;vertical-align:middle}
+.ts:hover,.ts:focus-visible{background:rgba(27,58,92,.2);outline:2px solid var(--accent);outline-offset:1px}
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Podsumowanie odcinka Huberman Lab (ep. 256) z dr Thaïs Aliabadi: endometrioza, PCOS, rak piersi, PMDD. Praktyczne informacje z odnośnikami do źródeł naukowych.">
 <meta property="og:title" content="Endometrioza, PCOS i zdrowie hormonalne — Huberman Lab">
-<meta property="og:description" content="Podsumowanie Huberman Lab ep. 256 z dr Thaïs Aliabadi: endometrioza, PCOS, rak piersi, PMDD. 10 źródeł PubMed.">
+<meta property="og:description" content="Podsumowanie Huberman Lab ep. 256 z dr Thaïs Aliabadi: endometrioza, PCOS, rak piersi, PMDD. 19 źródeł naukowych.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://fylchsharptail.github.io/endometrioza/">
 <link rel="canonical" href="https://fylchsharptail.github.io/endometrioza/">
 <meta name="twitter:card" content="summary">
 <title>Endometrioza, PCOS i zdrowie hormonalne — Huberman Lab</title>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Endometrioza, PCOS i zdrowie hormonalne kobiet","description":"Podsumowanie odcinka Huberman Lab (ep. 256) z dr Thaïs Aliabadi: endometrioza, PCOS, rak piersi, PMDD.","inLanguage":"pl","datePublished":"2025-11-24","dateModified":"2026-04-16","mainEntityOfPage":{"@type":"WebPage","@id":"https://fylchsharptail.github.io/endometrioza/"},"isAccessibleForFree":true,"about":[{"@type":"MedicalCondition","name":"Endometrioza"},{"@type":"MedicalCondition","name":"Zespół policystycznych jajników","alternateName":"PCOS"},{"@type":"MedicalCondition","name":"Przedmiesiączkowe zaburzenie dysforyczne","alternateName":"PMDD"}],"citation":["https://pubmed.ncbi.nlm.nih.gov/37580314/","https://pubmed.ncbi.nlm.nih.gov/35350465/","https://pubmed.ncbi.nlm.nih.gov/31328629/","https://pubmed.ncbi.nlm.nih.gov/31260048/","https://pubmed.ncbi.nlm.nih.gov/16936305/","https://pubmed.ncbi.nlm.nih.gov/29042448/","https://pubmed.ncbi.nlm.nih.gov/39140320/","https://pubmed.ncbi.nlm.nih.gov/39178623/","https://pubmed.ncbi.nlm.nih.gov/32767206/","https://www.cancer.org/research/cancer-facts-statistics/breast-cancer-facts-figures.html","https://pubmed.ncbi.nlm.nih.gov/41757236/","https://pubmed.ncbi.nlm.nih.gov/27233760/","https://pubmed.ncbi.nlm.nih.gov/27664216/","https://pubmed.ncbi.nlm.nih.gov/36387924/","https://pubmed.ncbi.nlm.nih.gov/29523006/","https://pubmed.ncbi.nlm.nih.gov/35656460/","https://pubmed.ncbi.nlm.nih.gov/35147898/","https://pubmed.ncbi.nlm.nih.gov/23978486/","https://pubmed.ncbi.nlm.nih.gov/36942243/"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Endometrioza, PCOS i zdrowie hormonalne kobiet","description":"Podsumowanie odcinka Huberman Lab (ep. 256) z dr Thaïs Aliabadi: endometrioza, PCOS, rak piersi, PMDD.","inLanguage":"pl","datePublished":"2025-11-24","dateModified":"2026-04-17","mainEntityOfPage":{"@type":"WebPage","@id":"https://fylchsharptail.github.io/endometrioza/"},"isAccessibleForFree":true,"about":[{"@type":"MedicalCondition","name":"Endometrioza"},{"@type":"MedicalCondition","name":"Zespół policystycznych jajników","alternateName":"PCOS"},{"@type":"MedicalCondition","name":"Przedmiesiączkowe zaburzenie dysforyczne","alternateName":"PMDD"}],"citation":["https://pubmed.ncbi.nlm.nih.gov/37580314/","https://pubmed.ncbi.nlm.nih.gov/35350465/","https://pubmed.ncbi.nlm.nih.gov/31328629/","https://pubmed.ncbi.nlm.nih.gov/31260048/","https://pubmed.ncbi.nlm.nih.gov/16936305/","https://pubmed.ncbi.nlm.nih.gov/29042448/","https://pubmed.ncbi.nlm.nih.gov/39140320/","https://pubmed.ncbi.nlm.nih.gov/39178623/","https://pubmed.ncbi.nlm.nih.gov/32767206/","https://www.cancer.org/research/cancer-facts-statistics/breast-cancer-facts-figures.html","https://pubmed.ncbi.nlm.nih.gov/41757236/","https://pubmed.ncbi.nlm.nih.gov/27233760/","https://pubmed.ncbi.nlm.nih.gov/27664216/","https://pubmed.ncbi.nlm.nih.gov/36387924/","https://pubmed.ncbi.nlm.nih.gov/29523006/","https://pubmed.ncbi.nlm.nih.gov/35656460/","https://pubmed.ncbi.nlm.nih.gov/35147898/","https://pubmed.ncbi.nlm.nih.gov/23978486/","https://pubmed.ncbi.nlm.nih.gov/36942243/"]}</script>
 </head><body><a class="skip-link" href="#main-content">Przejdź do treści głównej</a>
 <header class="hero"><div class="hero-inner">
 <h1>Endometrioza, PCOS i zdrowie hormonalne kobiet</h1>
 <div class="sub">Podsumowanie odcinka Huberman Lab z udziałem Dr Thaïs Aliabadi, MD</div>
 <div class="hero-meta"><span>Huberman Lab · odcinek 256</span><span>24 listopada 2025 · 3h 07min</span><span>Dr Thaïs Aliabadi, MD · ginekolog, chirurg · Cedars-Sinai, Los Angeles</span></div>
 </div></header>
+<div class="layout">
 <main id="main-content" class="wrap">
 <div class="note" style="margin-bottom:1.5rem;" data-cell-id="disclaimer"><em>Zastrzeżenie:</em> Poniższe informacje są notatkami z odcinka podcastu Huberman Lab i nie stanowią porady medycznej. Część treści odzwierciedla opinie kliniczne dr Aliabadi. W sprawach zdrowotnych skonsultuj się z lekarzem.</div>
 <div class="featured" data-cell-id="featured"><div class="big">Kluczowy przekaz odcinka</div>
@@ -119,7 +131,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}</style>
 <div class="stat-card" data-cell-id="stat-pcos"><div class="big">8–13%</div><div class="lbl">kobiet w wieku rozrodczym ma PCOS<sup class="ref"><a href="#src-01">[1]</a>,<a href="#src-13">[13]</a></sup></div></div>
 <div class="stat-card" data-cell-id="stat-cancer"><div class="big">ok. 85%</div><div class="lbl">raków piersi występuje bez historii rodzinnej<sup class="ref"><a href="#src-10">[10]</a></sup></div></div>
 </div>
-<h2 id="endo"><span class="n">1.</span> Endometrioza — czym jest i jak działa</h2>
+<h2 id="endo"><span class="n">1.</span> Endometrioza — czym jest i jak działa <a class="ts" href="#" data-t="5966">1:39:26</a></h2>
 <p data-cell-id="s1-intro">Tkanka podobna do wyściółki macicy (endometrium) rośnie poza macicą: na jajnikach, jajowodach, pęcherzu, jelitach. Co miesiąc, gdy estrogen stymuluje wyściółkę macicy, stymuluje też te ektopowe ogniska. Gdy nie dochodzi do ciąży, ogniska krwawią do wnętrza miednicy.</p>
 <div class="card-grid">
 <div class="card" data-cell-id="s1-conseq"><b>Konsekwencje</b>Przewlekły stan zapalny, bliznowacenie i zrosty, uszkodzenie jajowodów, niszczenie jajeczek (zarówno ich liczby, jak i jakości).</div>
@@ -129,7 +141,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}</style>
 <span class="pb-label">Zasada Dr Aliabadi</span>
 „Jeśli masz bolesne miesiączki, traktuj to jako endometriozę, dopóki nie zostanie wykluczona."
 </div>
-<h2 id="objawy"><span class="n">2.</span> Objawy alarmowe</h2>
+<h2 id="objawy"><span class="n">2.</span> Objawy alarmowe <a class="ts" href="#" data-t="5966">1:39:26</a></h2>
 <ul>
 <li>Ból miesiączkowy powodujący opuszczanie szkoły lub pracy, leżenie w łóżku</li>
 <li>Ból podczas głębokiej penetracji w trakcie stosunku</li>
@@ -140,7 +152,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}</style>
 <li>Ból narastający z roku na rok, obejmujący coraz większą część cyklu</li>
 </ul>
 <div class="note" data-cell-id="s2-stage"><em>Ważne:</em> Stadium endometriozy słabo koreluje z nasileniem bólu.<sup class="ref"><a href="#src-02">[2]</a>,<a href="#src-05">[5]</a></sup> Stadium 1 może powodować straszliwy ból, a stadium 4 dawać łagodne objawy.</div>
-<h2 id="diagnostyka"><span class="n">3.</span> Diagnostyka</h2>
+<h2 id="diagnostyka"><span class="n">3.</span> Diagnostyka <a class="ts" href="#" data-t="6973">1:56:13</a></h2>
 <table>
 <thead>
 <tr><th>Metoda</th><th>Możliwości</th><th>Ograniczenia</th></tr>
@@ -160,7 +172,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}</style>
 <li data-cell-id="s3-rec-mri"><b>Jeśli objawy są ciężkie, proś o MRI miednicy</b> — lepsze niż USG przy podejrzeniu głębszych zmian.</li>
 <li data-cell-id="s3-rec-spec"><b>Szukaj specjalisty od endometriozy</b> — nie każdy ginekolog ma doświadczenie w diagnostyce i leczeniu endo.</li>
 </ol>
-<h2 id="leczenie"><span class="n">4.</span> Leczenie endometriozy</h2>
+<h2 id="leczenie"><span class="n">4.</span> Leczenie endometriozy <a class="ts" href="#" data-t="7292">2:01:32</a></h2>
 <h3>Podejście krok po kroku</h3>
 <div class="card" data-cell-id="s4-step1"><b>Krok 1 — Supresja hormonalna (pierwsza linia)</b>
 Ciągłe tabletki antykoncepcyjne (estrogen + progesteron) lub wkładka progestagenowa (Mirena, Kyleena). Cel: obniżenie poziomu estrogenu, który karmi ogniska endometriozy.<sup class="ref"><a href="#src-02">[2]</a></sup></div>
@@ -169,7 +181,7 @@ Laparoskopowe <strong>wycięcie</strong> (excision) ognisk, nie przypalanie (abl
 <div class="card" data-cell-id="s4-step3"><b>Krok 3 — Po operacji: zawsze supresja hormonalna</b>
 Bez supresji choroba wraca.<sup class="ref"><a href="#src-02">[2]</a></sup> Często wkładka progestagenowa zakładana tuż po operacji. W ciężkich przypadkach (stadium 3–4): antagoniści GnRH (Orilissa, Myfembree) na 6 miesięcy do 2 lat.</div>
 <div class="warn" data-cell-id="s4-preg"><strong>Ciąża nie jest leczeniem endometriozy.</strong><sup class="ref"><a href="#src-02">[2]</a></sup> Może tymczasowo złagodzić objawy (supresja owulacji, wysoki progesteron), ale ogniska przetrwają i objawy wracają po porodzie.</div>
-<h2 id="plodnosc"><span class="n">5.</span> Endometrioza a płodność</h2>
+<h2 id="plodnosc"><span class="n">5.</span> Endometrioza a płodność <a class="ts" href="#" data-t="5763">1:36:03</a></h2>
 <p data-cell-id="s5-intro">Endometrioza niszczy zarówno liczbę, jak i jakość jajeczek. Środowisko w miednicy staje się toksyczne: jajowody mogą być zablokowane, zapalne komórki atakują plemniki i zarodki. Zwiększa się ryzyko ciąży pozamacicznej i poronień.<sup class="ref"><a href="#src-02">[2]</a></sup></p>
 <div class="card-grid">
 <div class="card" data-cell-id="s5-reserve"><b>Rezerwa jajnikowa</b>Można mieć 30 lat i rezerwę jajnikową 40-latki (lub zero jajeczek). Poznaj swoje AMH jak najwcześniej.</div>
@@ -179,7 +191,7 @@ Bez supresji choroba wraca.<sup class="ref"><a href="#src-02">[2]</a></sup> Czę
 <span class="pb-label">Zalecenie z odcinka</span>
 Rozważ zamrożenie jajeczek, szczególnie jeśli masz endometriozę lub obniżone AMH. Im młodsze jajeczko w momencie zamrożenia, tym wyższa jego jakość.
 </div>
-<h2 id="pcos"><span class="n">6.</span> PCOS — zespół policystycznych jajników</h2>
+<h2 id="pcos"><span class="n">6.</span> PCOS — zespół policystycznych jajników <a class="ts" href="#" data-t="924">0:15:24</a></h2>
 <p data-cell-id="s6-prev">PCOS dotyka 8–13% kobiet w wieku rozrodczym wg metaanalizy globalnej (kryteria rotterdamskie).<sup class="ref"><a href="#src-01">[1]</a>,<a href="#src-13">[13]</a></sup> Dr Aliabadi podaje wyższy odsetek (15–20%), co może odzwierciedlać różnice populacyjne. Zdaniem Dr Aliabadi ponad 50% pacjentek z PCOS może mieć jednocześnie endometriozę. <em>To obserwacja kliniczna dr Aliabadi, a nie potwierdzony szacunek z literatury; dotychczasowe badania podają bardzo różne odsetki współwystępowania.</em></p>
 <h3>Diagnoza — 2 z 3 kryteriów (Rotterdam)</h3>
 <div class="card-grid">
@@ -189,7 +201,7 @@ Rozważ zamrożenie jajeczek, szczególnie jeśli masz endometriozę lub obniżo
 <div class="card" data-cell-id="s6-rott3"><b>3. Obraz PCOS na USG lub podwyższone AMH</b>
 Policystyczne jajniki w badaniu ultrasonograficznym lub podwyższony poziom hormonu antymüllerowskiego.</div>
 <div class="note" data-cell-id="s6-lean"><em>Ważne:</em> Można mieć PCOS bez nadwagi — 25% pacjentek z PCOS jest szczupłych.<sup class="ref"><a href="#src-12">[12]</a></sup> PCOS to zaburzenie wieloukładowe: oś mózg-jajnik, insulinooporność, przewlekły stan zapalny, genetyka.</div>
-<h2 id="leczenie-pcos"><span class="n">7.</span> Leczenie PCOS</h2>
+<h2 id="leczenie-pcos"><span class="n">7.</span> Leczenie PCOS <a class="ts" href="#" data-t="3680">1:01:20</a></h2>
 <h3>Pięć filarów</h3>
 <ol class="rec">
 <li data-cell-id="s7-life"><b>Styl życia</b> — sen (priorytet), redukcja stresu, regularne ćwiczenia, przerywanie siedzenia krótkim spacerem (poprawia glukozę i insulinę)<sup class="ref"><a href="#src-17">[17]</a></sup> — wg dr Aliabadi zwłaszcza po posiłkach; dieta niskozapalna.<sup class="ref"><a href="#src-01">[1]</a></sup></li>
@@ -211,14 +223,14 @@ Policystyczne jajniki w badaniu ultrasonograficznym lub podwyższony poziom horm
 <tr data-cell-id="s7-mulb"><td><strong>Liść morwy</strong></td><td>Może spowalniać wchłanianie cukrów.<sup class="ref"><a href="#src-16">[16]</a></sup></td></tr>
 </tbody>
 </table>
-<h2 id="rak"><span class="n">8.</span> Rak piersi</h2>
+<h2 id="rak"><span class="n">8.</span> Rak piersi <a class="ts" href="#" data-t="9471">2:37:51</a></h2>
 <div class="stat-row">
 <div class="stat-card" data-cell-id="s8-stat85"><div class="big">ok. 85%</div><div class="lbl">kobiet z rakiem piersi <strong>nie ma</strong> historii rodzinnej<sup class="ref"><a href="#src-10">[10]</a></sup></div></div>
 <div class="stat-card" data-cell-id="s8-stat20"><div class="big">≥ 20%</div><div class="lbl">ryzyko życiowe → obrazowanie już od 30. roku życia</div></div>
 </div>
 <p data-cell-id="s8-tyrer">Dr Aliabadi zaleca obliczenie ryzyka życiowego raka piersi za pomocą <a href="https://ibis.ikonopedia.com">Tyrer-Cuzick Risk Assessment Tool</a> (darmowy, online). Jeśli ryzyko wynosi 20% lub więcej, powinnaś mieć obrazowanie piersi (MRI + mammografia) już od 30. roku życia, nie czekając do 40.<sup class="ref"><a href="#src-10">[10]</a></sup></p>
 <div class="note" data-cell-id="s8-brca"><em>Testy genetyczne:</em> Jeśli masz rodzinną historię nowotworów (piersi, jajników, trzustki, prostaty w rodzinie), poproś o testy genetyczne. Warto znać swój status BRCA i innych genów.</div>
-<h2 id="pmdd"><span class="n">9.</span> PMDD — przedmiesiączkowe zaburzenie dysforyczne</h2>
+<h2 id="pmdd"><span class="n">9.</span> PMDD — przedmiesiączkowe zaburzenie dysforyczne <a class="ts" href="#" data-t="10386">2:53:06</a></h2>
 <p data-cell-id="s9-intro">PMDD to nie zaburzenie hormonalne w klasycznym sensie. Kobiety z PMDD mają normalne poziomy hormonów, ale ich mózg reaguje ekstremalnie na normalne wahania progesteronu i jego metabolitów (szczególnie allopregnanolonu)<sup><a href="#src-18">[18]</a></sup>.</p>
 <div class="card-grid">
 <div class="card" data-cell-id="s9-ssri"><b>Leczenie: SSRI</b>
@@ -226,7 +238,7 @@ SSRI (Prozac, Zoloft) są skuteczne w leczeniu PMDD zarówno w dawkowaniu ciąg�
 <div class="card" data-cell-id="s9-peri"><b>Po 40. roku życia</b>
 Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywać na perimenopause, nie na PMDD. Warto to rozróżnić.</div>
 </div>
-<h2 id="checklista"><span class="n">10.</span> Praktyczna checklista</h2>
+<h2 id="checklista"><span class="n">10.</span> Praktyczna checklista <a class="ts" href="#" data-t="5522">1:32:02</a></h2>
 <ol class="rec">
 <li data-cell-id="s10-amh"><b>Poznaj swoje AMH</b> (rezerwę jajnikową) — prosty test z krwi, który każda kobieta powinna znać.</li>
 <li data-cell-id="s10-usg"><b>Poproś o USG miednicy</b> na kolejnej wizycie ginekologicznej.</li>
@@ -269,4 +281,7 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywa�
 </div>
 <footer>Opracowanie na podstawie odcinka Huberman Lab z 24 listopada 2025 · Gość: Dr Thaïs Aliabadi, MD</footer>
 </main>
+<aside id="yt-player-col" aria-label="Odtwarzacz wideo"><div id="yt-sticky"><div id="yt-wrap"><iframe id="yt-player" src="https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;origin=https://fylchsharptail.github.io" title="Huberman Lab ep. 256" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe></div><button id="yt-collapse" aria-expanded="true" aria-controls="yt-wrap">▼ Wideo</button></div></aside>
+</div>
+<script>!function(){var f=document.getElementById("yt-player"),c=document.getElementById("yt-collapse"),p=document.getElementById("yt-player-col");function cmd(fn,a){f.contentWindow.postMessage(JSON.stringify({event:"command",func:fn,args:a||[]}),"https://www.youtube.com")}document.addEventListener("click",function(e){var t=e.target.closest(".ts");if(!t)return;e.preventDefault();var s=parseInt(t.getAttribute("data-t"),10);if(isNaN(s))return;cmd("seekTo",[s,!0]);cmd("playVideo");if(p.classList.contains("collapsed")){p.classList.remove("collapsed");c.setAttribute("aria-expanded","true");c.textContent="\u25BC Wideo"}if(window.innerWidth<1100)f.scrollIntoView({behavior:"smooth",block:"end"})});c&&c.addEventListener("click",function(){var x=p.classList.toggle("collapsed");c.setAttribute("aria-expanded",String(!x));c.textContent=x?"\u25B2 Wideo":"\u25BC Wideo"})}()</script>
 </body></html>
