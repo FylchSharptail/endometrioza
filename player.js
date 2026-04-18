@@ -55,11 +55,12 @@ function updAudioBtn(){var isA=box.classList.contains('audio');var ico=audioBtn.
 audioBtn.addEventListener('click',function(e){e.stopPropagation();box.classList.toggle('audio');box.style.height='auto';updAudioBtn()});
 updAudioBtn();
 var barTimer;
-function showBars(){box.classList.add('bars');clearTimeout(barTimer);barTimer=setTimeout(function(){box.classList.remove('bars')},1800)}
+var noHover=matchMedia('(hover: none)').matches;
+function showBars(){box.classList.add('bars');clearTimeout(barTimer);if(!noHover)barTimer=setTimeout(function(){box.classList.remove('bars')},1800)}
 box.addEventListener('mouseenter',showBars);
 box.addEventListener('mousemove',showBars);
 box.addEventListener('touchstart',showBars,{passive:true});
-if(!isMobile)showBars();
+showBars();
 var tipEl=null;
 function ensureTip(){if(!tipEl){tipEl=document.createElement('div');tipEl.className='tip-portal';document.body.appendChild(tipEl)}}
 function showTip(el){ensureTip();var text=el.getAttribute('data-tip')||el.getAttribute('aria-label')||'';if(!text)return;tipEl.textContent=text;var r=el.getBoundingClientRect();tipEl.classList.remove('top','bottom','left','show');var inNav=el.closest&&el.closest('#sn');if(inNav){tipEl.classList.add('left');tipEl.style.visibility='hidden';tipEl.classList.add('show');var tr=tipEl.getBoundingClientRect();var top=r.top+r.height/2-tr.height/2;top=Math.max(8,Math.min(top,innerHeight-tr.height-8));tipEl.style.left=(r.left-tr.width-12)+'px';tipEl.style.top=top+'px';tipEl.style.visibility=''}else{var below=(innerHeight-r.bottom)>r.top;tipEl.classList.add(below?'bottom':'top');tipEl.style.visibility='hidden';tipEl.classList.add('show');var tr2=tipEl.getBoundingClientRect();var left=r.left+r.width/2-tr2.width/2;left=Math.max(8,Math.min(left,innerWidth-tr2.width-8));tipEl.style.left=left+'px';tipEl.style.top=(below?(r.bottom+10):(r.top-tr2.height-10))+'px';tipEl.style.visibility=''}}
