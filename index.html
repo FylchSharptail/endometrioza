@@ -90,45 +90,51 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 .ts{font-size:.72em;color:var(--accent);text-decoration:none;padding:.1em .35em;border-radius:3px;background:var(--accent-light);white-space:nowrap;cursor:pointer;margin-left:.3em;font-variant-numeric:tabular-nums;vertical-align:middle}
 .ts:hover,.ts:focus-visible{background:rgba(27,58,92,.2);outline:2px solid var(--accent);outline-offset:1px}
 
-#yt-box{position:sticky;top:1rem;background:#000;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);display:grid;grid-template-columns:32px 1fr;overflow:visible;min-width:160px;z-index:1000;transition:grid-template-columns .35s ease,transform .35s ease}
-#yt-box.dragged{position:fixed;transition:none;box-shadow:0 8px 32px rgba(0,0,0,.6)}
-#yt-drag{background:#1a1a1a;cursor:grab;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 3px;border-radius:8px 0 0 8px;user-select:none;-webkit-user-select:none;touch-action:none;z-index:2}
+#yt-box{position:sticky;top:1rem;background:#000;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.4);display:grid;grid-template-rows:0 auto 0;overflow:visible;min-width:160px;z-index:1000;transition:grid-template-rows .28s ease}
+#yt-box.bars{grid-template-rows:26px auto 34px}
+#yt-box.dragged{position:fixed;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+#yt-bar-top{background:#151515;display:flex;align-items:center;justify-content:space-between;overflow:hidden;border-radius:8px 8px 0 0;opacity:0;transition:opacity .18s ease}
+#yt-bar-bottom{background:#0f0f0f;display:flex;align-items:center;justify-content:center;gap:10px;overflow:hidden;border-radius:0 0 8px 8px;opacity:0;transition:opacity .18s ease;padding:0 6px}
+#yt-box.bars #yt-bar-top,#yt-box.bars #yt-bar-bottom{opacity:1}
+#yt-drag{flex:1;align-self:stretch;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;display:flex;align-items:center;padding:0 10px}
+#yt-drag::before{content:'';flex:1;height:3px;background:repeating-linear-gradient(90deg,#3a3a3a 0 4px,transparent 4px 7px);border-radius:2px;opacity:.55}
 #yt-drag:active{cursor:grabbing}
-#yt-drag span{color:#555;font-size:14px;margin-bottom:2px}
-#yt-drag button{background:none;border:1px solid #444;color:#aaa;font-size:11px;font-weight:700;padding:3px 0;border-radius:4px;cursor:pointer;width:26px;font-family:inherit;line-height:1}
-#yt-drag button:hover{background:#333;color:#fff}
-#yt-reset{display:none!important}
-#yt-box.dragged #yt-reset{display:block!important}
-#yt-box.audio #yt-audio{background:#1b3a5c;color:#fff;border-color:#1b3a5c}
-#yt-content{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;transition:opacity .25s}
+#yt-bar-top button,#yt-bar-bottom button{background:none;border:1px solid #333;color:#bbb;font-size:11px;padding:0 9px;border-radius:4px;cursor:pointer;height:20px;line-height:1;font-family:inherit;position:relative;font-weight:600;margin:2px 4px;display:inline-flex;align-items:center;justify-content:center}
+#yt-bar-top button:hover,#yt-bar-bottom button:hover{background:#2a2a2a;color:#fff;border-color:#555}
+#yt-reset{display:none}
+#yt-box.dragged #yt-reset{display:inline-flex}
+#yt-box.audio #yt-audio{background:#1b3a5c;color:#fff;border-color:#2b5280}
+#yt-content{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
 #yt-box.hidden{display:none}
-#yt-show{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;background:#1b3a5c;color:#fff;border:0;font-size:20px;font-weight:700;cursor:pointer;display:none;z-index:1100;box-shadow:0 4px 14px rgba(0,0,0,.35);font-family:inherit}
+#yt-show{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;background:#1b3a5c;color:#fff;border:0;font-size:16px;font-weight:700;cursor:pointer;display:none;z-index:1100;box-shadow:0 4px 14px rgba(0,0,0,.35);font-family:inherit;padding-left:3px}
 #yt-show:hover{background:#274d72}
 #yt-show.on{display:block}
 #yt-box iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
-#yt-subs{background:rgba(0,0,0,.85);color:#eee;font-size:13px;line-height:1.4;padding:6px 10px;min-height:24px;max-height:120px;overflow:hidden;border-radius:0 0 8px 0;transition:max-height .4s ease,padding .4s ease,opacity .3s}
+#yt-subs{background:rgba(0,0,0,.85);color:#eee;font-size:13px;line-height:1.4;padding:6px 10px;min-height:24px;max-height:120px;overflow:hidden;transition:max-height .4s ease,padding .4s ease,opacity .3s}
 #yt-subs:empty::before{content:attr(data-ph);color:#666;font-style:italic}
 #yt-subs.fade{max-height:0;min-height:0;padding-top:0;padding-bottom:0;opacity:0}
-#yt-box.idle{grid-template-columns:32px 0}
-#yt-box.idle #yt-content{opacity:0;pointer-events:none}
-#yt-box.audio #yt-content{min-height:38px}
-#yt-box.audio #yt-content::before{content:'♪  Tylko dźwięk';color:#9cf;font-size:12px;padding:10px 12px;display:block;background:#0a0a0a;letter-spacing:.04em;font-weight:600}
-@media(min-width:1100px){#yt-box.idle iframe{position:absolute!important;left:-9999px!important;top:0!important;width:320px!important;height:180px!important;aspect-ratio:auto!important}}
 #yt-box.audio iframe{position:absolute!important;left:-9999px!important;top:0!important;width:320px!important;height:180px!important;aspect-ratio:auto!important}
+#yt-box.audio #yt-subs{display:none}
 #yt-rz{position:absolute;right:0;bottom:0;width:18px;height:18px;cursor:nwse-resize;touch-action:none;z-index:10}
 #yt-rz::after{content:'';position:absolute;right:3px;bottom:3px;width:10px;height:10px;border-right:2px solid #888;border-bottom:2px solid #888}
-@media(max-width:1099px){#yt-box{position:fixed;bottom:0;left:0;right:0;top:auto;border-radius:8px 8px 0 0;width:auto}#yt-box.dragged{left:auto;right:auto;bottom:auto;width:auto;border-radius:8px}#yt-subs{display:none}#yt-box.idle{grid-template-columns:32px 1fr;transform:translateY(calc(100% - 32px))}}
 #yt-rzl{position:absolute;left:0;bottom:0;width:18px;height:18px;cursor:nesw-resize;touch-action:none;z-index:10}#yt-rzl::after{content:'';position:absolute;left:3px;bottom:3px;width:10px;height:10px;border-left:2px solid #888;border-bottom:2px solid #888}
-#yt-rztr{position:absolute;right:0;top:0;width:18px;height:18px;cursor:nesw-resize;touch-action:none;z-index:10}#yt-rztr::after{content:'';position:absolute;right:3px;top:3px;width:10px;height:10px;border-right:2px solid #888;border-top:2px solid #888}
-#yt-rztl{position:absolute;left:0;top:0;width:18px;height:18px;cursor:nwse-resize;touch-action:none;z-index:11}#yt-rztl::after{content:'';position:absolute;left:3px;top:3px;width:10px;height:10px;border-left:2px solid #888;border-top:2px solid #888}
+#yt-rztr{position:absolute;right:0;top:0;width:18px;height:18px;cursor:nesw-resize;touch-action:none;z-index:12}#yt-rztr::after{content:'';position:absolute;right:3px;top:3px;width:10px;height:10px;border-right:2px solid #888;border-top:2px solid #888}
+#yt-rztl{position:absolute;left:0;top:0;width:18px;height:18px;cursor:nwse-resize;touch-action:none;z-index:12}#yt-rztl::after{content:'';position:absolute;left:3px;top:3px;width:10px;height:10px;border-left:2px solid #888;border-top:2px solid #888}
 #yt-rz,#yt-rzl,#yt-rztr,#yt-rztl{opacity:0;transition:opacity .2s ease}
 #yt-box:hover #yt-rz,#yt-box:hover #yt-rzl,#yt-box:hover #yt-rztr,#yt-box:hover #yt-rztl{opacity:1}
-#yt-drag span{font-size:15px;line-height:1}
-#yt-drag button{font-size:13px}
-#yt-audio-ctrl{display:none;padding:12px 14px 14px;background:#0a0a0a;color:#eee;border-radius:0 0 8px 0}
+@media(max-width:1099px){#yt-box{position:fixed;bottom:0;left:0;right:0;top:auto;border-radius:8px 8px 0 0;width:auto}#yt-box.dragged{left:auto;right:auto;bottom:auto;width:auto;border-radius:8px}#yt-subs{display:none}}
+.btn-tip{position:relative}
+.btn-tip::after{content:'';position:absolute;left:2px;right:2px;bottom:-3px;height:2px;background:#4a9eff;transform:scaleX(0);transform-origin:left;pointer-events:none;border-radius:2px;opacity:.95}
+.btn-tip.pending::after{animation:tipFill 1s linear forwards}
+@keyframes tipFill{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+.tip{position:absolute;background:#1c1f26;color:#fff;padding:6px 10px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .18s ease;z-index:1200;font-weight:500;letter-spacing:.01em;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.btn-tip.show .tip{opacity:1}
+#yt-bar-top .btn-tip .tip{top:calc(100% + 10px);right:0}
+#yt-bar-top .btn-tip .tip::before{content:'';position:absolute;bottom:100%;right:14px;border:5px solid transparent;border-bottom-color:#1c1f26}
+#yt-bar-bottom .btn-tip .tip{bottom:calc(100% + 10px);left:50%;transform:translateX(-50%)}
+#yt-bar-bottom .btn-tip .tip::before{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1c1f26}
+#yt-audio-ctrl{display:none;padding:12px 14px 14px;background:#0a0a0a;color:#eee}
 #yt-box.audio #yt-audio-ctrl{display:block}
-#yt-box.audio #yt-subs{display:none}
-#yt-box.audio #yt-content::before{display:none!important}
 .ac-title{font-size:12px;font-weight:600;color:#9cf;margin-bottom:10px;text-align:center;min-height:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.01em}
 .ac-time{display:flex;align-items:center;gap:8px;font-size:10px;color:#888;margin-bottom:10px;font-variant-numeric:tabular-nums}
 .ac-prog{flex:1;height:4px;background:#2a2a2a;border-radius:2px;cursor:pointer;position:relative;overflow:hidden}
@@ -331,8 +337,8 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywa�
 </div>
 <footer>Opracowanie na podstawie odcinka Huberman Lab z 24 listopada 2025 · Gość: Dr Thaïs Aliabadi, MD</footer>
 </main>
-<aside id='yt-col' aria-label='Odtwarzacz wideo'><div id='yt-box'><div id='yt-drag'><span title='Przeci&#261;gnij' aria-hidden='true'>&#10303;</span><button id='yt-reset' title='Resetuj pozycj&#281;' aria-label='Resetuj pozycj&#281;'>&#8634;</button><button id='yt-audio' title='Tylko d&#378;wi&#281;k' aria-label='Tylko d&#378;wi&#281;k'>&#9834;</button><button id='yt-hide' title='Ukryj wideo' aria-label='Ukryj wideo'>&#10005;</button></div><div id='yt-content'><iframe id='yt-player' src='https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;cc_lang_pref=pl&amp;cc_load_policy=1&amp;origin=https://fylchsharptail.github.io' title='Huberman Lab ep. 256' allow='autoplay; encrypted-media' allowfullscreen loading='lazy'></iframe><div id='yt-subs' data-ph='Kliknij znacznik czasu lub odtw&oacute;rz wideo&hellip;'></div><div id='yt-audio-ctrl'><div class='ac-title'>&mdash;</div><div class='ac-time'><span class='ac-cur'>0:00</span><div class='ac-prog' title='Przewi&#324;'><div class='ac-bar'></div></div><span class='ac-dur'>&mdash;</span></div><div class='ac-btns'><button id='ac-prev' title='Poprzedni rozdzia&#322;' aria-label='Poprzedni rozdzia&#322;'>&#9198;</button><button id='ac-play' title='Odtw&oacute;rz / Pauza' aria-label='Odtw&oacute;rz / Pauza'>&#9654;</button><button id='ac-next' title='Nast&#281;pny rozdzia&#322;' aria-label='Nast&#281;pny rozdzia&#322;'>&#9197;</button></div></div></div><div id='yt-rz'></div><div id='yt-rzl'></div><div id='yt-rztr'></div><div id='yt-rztl'></div></div></aside>
+<aside id='yt-col' aria-label='Odtwarzacz wideo'><div id='yt-box'><div id='yt-bar-top'><div id='yt-drag' aria-label='Przeci&#261;gnij'></div><button id='yt-hide' class='btn-tip' aria-label='Ukryj wideo'>&#10005;<span class='tip'>Ukryj wideo</span></button></div><div id='yt-content'><iframe id='yt-player' src='https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;cc_lang_pref=pl&amp;cc_load_policy=1&amp;origin=https://fylchsharptail.github.io' title='Huberman Lab ep. 256' allow='autoplay; encrypted-media' allowfullscreen loading='lazy'></iframe><div id='yt-subs' data-ph='Kliknij znacznik czasu lub odtw&oacute;rz wideo&hellip;'></div><div id='yt-audio-ctrl'><div class='ac-title'>&mdash;</div><div class='ac-time'><span class='ac-cur'>0:00</span><div class='ac-prog' title='Przewi&#324;'><div class='ac-bar'></div></div><span class='ac-dur'>&mdash;</span></div><div class='ac-btns'><button id='ac-prev' class='btn-tip' aria-label='Poprzedni rozdzia&#322;'>&#9198;<span class='tip'>Poprzedni rozdzia&#322;</span></button><button id='ac-play' class='btn-tip' aria-label='Odtw&oacute;rz / Pauza'>&#9654;<span class='tip'>Odtw&oacute;rz / Pauza</span></button><button id='ac-next' class='btn-tip' aria-label='Nast&#281;pny rozdzia&#322;'>&#9197;<span class='tip'>Nast&#281;pny rozdzia&#322;</span></button></div></div></div><div id='yt-bar-bottom'><button id='yt-reset' class='btn-tip' aria-label='Resetuj pozycj&#281;'>&#8634;<span class='tip'>Resetuj pozycj&#281;</span></button><button id='yt-audio' class='btn-tip' aria-label='Tylko d&#378;wi&#281;k'>&#9834;<span class='tip'>Tylko d&#378;wi&#281;k</span></button></div><div id='yt-rz'></div><div id='yt-rzl'></div><div id='yt-rztr'></div><div id='yt-rztl'></div></div></aside>
 <button id='yt-show' title='Poka&zacute; wideo' aria-label='Poka&zacute; wideo'>&#9654;</button>
 </div>
-<script src="player.js?v=df735f5a33"></script>
+<script src="player.js?v=da8c7e9bf1"></script>
 </body></html>
