@@ -4,12 +4,13 @@ function getCh(t){for(var i=0;i<CD.length;i++)if(t>=CD[i][0])return CD[i][1];ret
 function getIdx(t){for(var i=C.length-1;i>=0;i--)if(t>=C[i][0])return i;return 0}
 function fmt(s){s=Math.max(0,s|0);var h=s/3600|0,m=(s%3600)/60|0,x=s%60;return(h?h+':'+(m<10?'0':''):'')+m+':'+(x<10?'0':'')+x}
 var box=document.getElementById('yt-box'),drag=document.getElementById('yt-drag'),rz=document.getElementById('yt-rz'),rzl=document.getElementById('yt-rzl'),rztl=document.getElementById('yt-rztl'),rztr=document.getElementById('yt-rztr'),rst=document.getElementById('yt-reset'),fr=document.getElementById('yt-player'),sub=document.getElementById('yt-subs');
-var acTitle=document.querySelector('#yt-audio-ctrl .ac-title'),acCur=document.querySelector('#yt-audio-ctrl .ac-cur'),acDur=document.querySelector('#yt-audio-ctrl .ac-dur'),acBar=document.querySelector('#yt-audio-ctrl .ac-bar'),acProg=document.querySelector('#yt-audio-ctrl .ac-prog'),acPlay=document.getElementById('ac-play'),acPrev=document.getElementById('ac-prev'),acNext=document.getElementById('ac-next');
+var acTitle=document.querySelector('#yt-audio-ctrl .ac-title'),acCur=document.querySelector('#yt-audio-ctrl .ac-cur'),acDur=document.querySelector('#yt-audio-ctrl .ac-dur'),acBar=document.querySelector('#yt-audio-ctrl .ac-bar'),acProg=document.querySelector('#yt-audio-ctrl .ac-prog'),acPlay=document.getElementById('ac-play'),acPrev=document.getElementById('ac-prev'),acNext=document.getElementById('ac-next'),acPlayLbl=document.getElementById('ac-play-lbl');
 var acPlayIco=acPlay&&acPlay.firstChild;
+if(window.innerWidth<1100)box.classList.add('audio');
 function cmd(fn,a){fr.contentWindow.postMessage(JSON.stringify({event:'command',func:fn,args:a||[]}),'https://www.youtube.com')}
 document.addEventListener('click',function(e){var t=e.target.closest('.ts');if(!t)return;e.preventDefault();var sec=parseInt(t.getAttribute('data-t'),10);if(isNaN(sec))return;cmd('seekTo',[sec,!0]);cmd('playVideo');if(window.innerWidth<1100)fr.scrollIntoView({behavior:'smooth',block:'end'})});
 var last='',subTimer,curT=0,dur=0,playing=false;
-function setPlayIco(){if(acPlayIco)acPlayIco.nodeValue=playing?'⏸':'▶'}
+function setPlayIco(){if(acPlayIco)acPlayIco.nodeValue=playing?'⏸':'▶';if(acPlayLbl)acPlayLbl.textContent=playing?'Pauza':'Odtwórz'}
 window.addEventListener('message',function(e){if(e.origin.indexOf('youtube.com')===-1)return;var d;try{d=JSON.parse(e.data)}catch(_){return}if(d.event==='infoDelivery'&&d.info){if(typeof d.info.currentTime==='number'){curT=d.info.currentTime;var ch=getCh(curT);if(ch!==last){sub.textContent=ch;if(acTitle)acTitle.textContent=ch;last=ch;sub.classList.remove('fade');clearTimeout(subTimer);subTimer=setTimeout(function(){sub.classList.add('fade')},5000)}if(acCur)acCur.textContent=fmt(curT);if(dur>0&&acBar)acBar.style.width=(curT/dur*100)+'%'}if(typeof d.info.duration==='number'&&d.info.duration>0&&d.info.duration!==dur){dur=d.info.duration;if(acDur)acDur.textContent=fmt(dur)}if(typeof d.info.playerState==='number'){playing=(d.info.playerState===1);setPlayIco()}}if(d.event==='onStateChange'){playing=(d.info===1);setPlayIco()}});
 fr.addEventListener('load',function(){fr.contentWindow.postMessage(JSON.stringify({event:'listening'}),'*');cmd('addEventListener',['onStateChange'])});
 if(acPlay)acPlay.addEventListener('click',function(e){e.stopPropagation();cmd(playing?'pauseVideo':'playVideo')});
@@ -24,19 +25,19 @@ function dmove(e){if(!ds)return;e.preventDefault();var p=gxy(e);if(!box.classLis
 function dend(){if(!ds)return;ds=null;fr.style.pointerEvents=''}
 var rs=null;
 function rstart(e){e.preventDefault();e.stopPropagation();promote();var r=box.getBoundingClientRect();rs={sw:r.width,sh:r.height,sx:gxy(e).x,sy:gxy(e).y};fr.style.pointerEvents='none'}
-function rmove(e){if(!rs)return;e.preventDefault();var p=gxy(e);box.style.width=Math.max(160,Math.min(rs.sw+(p.x-rs.sx),innerWidth-20))+'px';box.style.height=Math.max(120,Math.min(rs.sh+(p.y-rs.sy),innerHeight-20))+'px'}
+function rmove(e){if(!rs)return;e.preventDefault();var p=gxy(e);box.style.width=Math.max(180,Math.min(rs.sw+(p.x-rs.sx),innerWidth-20))+'px';box.style.height=Math.max(120,Math.min(rs.sh+(p.y-rs.sy),innerHeight-20))+'px'}
 function rend(){if(!rs)return;rs=null;fr.style.pointerEvents=''}
 var rsl=null;
 function rlstart(e){e.preventDefault();e.stopPropagation();promote();var r=box.getBoundingClientRect();rsl={sw:r.width,sh:r.height,sl:r.left,sx:gxy(e).x,sy:gxy(e).y};fr.style.pointerEvents='none'}
-function rlmove(e){if(!rsl)return;e.preventDefault();var p=gxy(e);var dx=p.x-rsl.sx;var nw=Math.max(160,Math.min(rsl.sw-dx,innerWidth-20));var nh=Math.max(120,Math.min(rsl.sh+(p.y-rsl.sy),innerHeight-20));box.style.width=nw+'px';box.style.height=nh+'px';box.style.left=(rsl.sl+(rsl.sw-nw))+'px'}
+function rlmove(e){if(!rsl)return;e.preventDefault();var p=gxy(e);var dx=p.x-rsl.sx;var nw=Math.max(180,Math.min(rsl.sw-dx,innerWidth-20));var nh=Math.max(120,Math.min(rsl.sh+(p.y-rsl.sy),innerHeight-20));box.style.width=nw+'px';box.style.height=nh+'px';box.style.left=(rsl.sl+(rsl.sw-nw))+'px'}
 function rlend(){if(!rsl)return;rsl=null;fr.style.pointerEvents=''}
 var rstr=null;
 function rtrstart(e){e.preventDefault();e.stopPropagation();promote();var r=box.getBoundingClientRect();rstr={sw:r.width,sh:r.height,st:r.top,sx:gxy(e).x,sy:gxy(e).y};fr.style.pointerEvents='none'}
-function rtrmove(e){if(!rstr)return;e.preventDefault();var p=gxy(e);var dy=p.y-rstr.sy;var nw=Math.max(160,Math.min(rstr.sw+(p.x-rstr.sx),innerWidth-20));var nh=Math.max(120,Math.min(rstr.sh-dy,innerHeight-20));box.style.width=nw+'px';box.style.height=nh+'px';box.style.top=(rstr.st+(rstr.sh-nh))+'px'}
+function rtrmove(e){if(!rstr)return;e.preventDefault();var p=gxy(e);var dy=p.y-rstr.sy;var nw=Math.max(180,Math.min(rstr.sw+(p.x-rstr.sx),innerWidth-20));var nh=Math.max(120,Math.min(rstr.sh-dy,innerHeight-20));box.style.width=nw+'px';box.style.height=nh+'px';box.style.top=(rstr.st+(rstr.sh-nh))+'px'}
 function rtrend(){if(!rstr)return;rstr=null;fr.style.pointerEvents=''}
 var rstl=null;
 function rtlstart(e){e.preventDefault();e.stopPropagation();promote();var r=box.getBoundingClientRect();rstl={sw:r.width,sh:r.height,sl:r.left,st:r.top,sx:gxy(e).x,sy:gxy(e).y};fr.style.pointerEvents='none'}
-function rtlmove(e){if(!rstl)return;e.preventDefault();var p=gxy(e);var dx=p.x-rstl.sx;var dy=p.y-rstl.sy;var nw=Math.max(160,Math.min(rstl.sw-dx,innerWidth-20));var nh=Math.max(120,Math.min(rstl.sh-dy,innerHeight-20));box.style.width=nw+'px';box.style.height=nh+'px';box.style.left=(rstl.sl+(rstl.sw-nw))+'px';box.style.top=(rstl.st+(rstl.sh-nh))+'px'}
+function rtlmove(e){if(!rstl)return;e.preventDefault();var p=gxy(e);var dx=p.x-rstl.sx;var dy=p.y-rstl.sy;var nw=Math.max(180,Math.min(rstl.sw-dx,innerWidth-20));var nh=Math.max(120,Math.min(rstl.sh-dy,innerHeight-20));box.style.width=nw+'px';box.style.height=nh+'px';box.style.left=(rstl.sl+(rstl.sw-nw))+'px';box.style.top=(rstl.st+(rstl.sh-nh))+'px'}
 function rtlend(){if(!rstl)return;rstl=null;fr.style.pointerEvents=''}
 function reset(){box.classList.remove('dragged');box.style.left='';box.style.top='';box.style.width='';box.style.height=''}
 var hideBtn=document.getElementById('yt-hide'),showBtn=document.getElementById('yt-show');
@@ -52,8 +53,13 @@ box.addEventListener('mouseenter',showBars);
 box.addEventListener('mousemove',showBars);
 box.addEventListener('touchstart',showBars,{passive:true});
 showBars();
-function bindTip(btn){var t,longPressed=false,lastTouch=0;function clear(){clearTimeout(t);btn.classList.remove('pending','show')}function start(){clear();btn.classList.add('pending');t=setTimeout(function(){btn.classList.remove('pending');btn.classList.add('show')},1000)}btn.addEventListener('mouseenter',start);btn.addEventListener('mouseleave',clear);btn.addEventListener('touchstart',function(e){lastTouch=Date.now();longPressed=false;clear();btn.classList.add('pending');t=setTimeout(function(){btn.classList.remove('pending');btn.classList.add('show');longPressed=true},1000)},{passive:true});btn.addEventListener('touchend',function(e){if(longPressed){e.preventDefault();setTimeout(clear,1800)}else{clear()}});btn.addEventListener('touchcancel',clear);btn.addEventListener('click',function(e){if(longPressed){e.preventDefault();e.stopImmediatePropagation();longPressed=false}},true)}
-Array.prototype.forEach.call(document.querySelectorAll('.btn-tip'),bindTip);
+var tipEl=null;
+function ensureTip(){if(!tipEl){tipEl=document.createElement('div');tipEl.className='tip-portal';document.body.appendChild(tipEl)}}
+function showTip(el){ensureTip();var text=el.getAttribute('data-tip')||el.getAttribute('aria-label')||'';if(!text)return;tipEl.textContent=text;var r=el.getBoundingClientRect();var below=(innerHeight-r.bottom)>r.top;tipEl.classList.remove('top','bottom','show');tipEl.classList.add(below?'bottom':'top');tipEl.style.visibility='hidden';tipEl.classList.add('show');var tr=tipEl.getBoundingClientRect();var left=r.left+r.width/2-tr.width/2;left=Math.max(8,Math.min(left,innerWidth-tr.width-8));tipEl.style.left=left+'px';tipEl.style.top=(below?(r.bottom+10):(r.top-tr.height-10))+'px';tipEl.style.visibility=''}
+function hideTip(){if(tipEl)tipEl.classList.remove('show')}
+function bindTip(el){var t,longPressed=false;function clr(){clearTimeout(t);el.classList.remove('pending');hideTip()}function go(){clr();el.classList.add('pending');t=setTimeout(function(){el.classList.remove('pending');showTip(el)},1000)}el.addEventListener('mouseenter',go);el.addEventListener('mouseleave',clr);el.addEventListener('touchstart',function(e){longPressed=false;clr();el.classList.add('pending');t=setTimeout(function(){el.classList.remove('pending');showTip(el);longPressed=true},1000)},{passive:true});el.addEventListener('touchend',function(e){if(longPressed){e.preventDefault();setTimeout(clr,1800)}else{clr()}});el.addEventListener('touchcancel',clr);el.addEventListener('click',function(e){if(longPressed){e.preventDefault();e.stopImmediatePropagation();longPressed=false}},true)}
+Array.prototype.forEach.call(document.querySelectorAll('[data-tip]'),bindTip);
+window.addEventListener('scroll',hideTip,{passive:true});window.addEventListener('resize',hideTip);
 drag.addEventListener('dblclick',reset);rst.addEventListener('click',function(e){e.stopPropagation();reset()});
 drag.addEventListener('mousedown',dstart);
 rz.addEventListener('mousedown',rstart);rzl.addEventListener('mousedown',rlstart);
