@@ -4,13 +4,13 @@ function getCh(t){for(var i=0;i<CD.length;i++)if(t>=CD[i][0])return CD[i][1];ret
 function getIdx(t){for(var i=C.length-1;i>=0;i--)if(t>=C[i][0])return i;return 0}
 function fmt(s){s=Math.max(0,s|0);var h=s/3600|0,m=(s%3600)/60|0,x=s%60;return(h?h+':'+(m<10?'0':''):'')+m+':'+(x<10?'0':'')+x}
 var box=document.getElementById('yt-box'),drag=document.getElementById('yt-drag'),rz=document.getElementById('yt-rz'),rzl=document.getElementById('yt-rzl'),rztl=document.getElementById('yt-rztl'),rztr=document.getElementById('yt-rztr'),rst=document.getElementById('yt-reset'),fr=document.getElementById('yt-player'),sub=document.getElementById('yt-subs');
-var acTitle=document.querySelector('#yt-audio-ctrl .ac-title'),acCur=document.querySelector('#yt-audio-ctrl .ac-cur'),acDur=document.querySelector('#yt-audio-ctrl .ac-dur'),acBar=document.querySelector('#yt-audio-ctrl .ac-bar'),acProg=document.querySelector('#yt-audio-ctrl .ac-prog'),acPlay=document.getElementById('ac-play'),acPrev=document.getElementById('ac-prev'),acNext=document.getElementById('ac-next'),acPlayLbl=document.getElementById('ac-play-lbl');
+var acTitle=document.querySelector('#yt-audio-ctrl .ac-title'),acCur=document.querySelector('#yt-audio-ctrl .ac-cur'),acDur=document.querySelector('#yt-audio-ctrl .ac-dur'),acBar=document.querySelector('#yt-audio-ctrl .ac-bar'),acProg=document.querySelector('#yt-audio-ctrl .ac-prog'),acPlay=document.getElementById('ac-play'),acPrev=document.getElementById('ac-prev'),acNext=document.getElementById('ac-next');
 var acPlayIco=acPlay&&acPlay.firstChild;
-if(window.innerWidth<1100)box.classList.add('audio');
+if(window.innerWidth<1100){box.classList.add('audio');box.style.height='auto'}
 function cmd(fn,a){fr.contentWindow.postMessage(JSON.stringify({event:'command',func:fn,args:a||[]}),'https://www.youtube.com')}
 document.addEventListener('click',function(e){var t=e.target.closest('.ts');if(!t)return;e.preventDefault();var sec=parseInt(t.getAttribute('data-t'),10);if(isNaN(sec))return;cmd('seekTo',[sec,!0]);cmd('playVideo');if(window.innerWidth<1100)fr.scrollIntoView({behavior:'smooth',block:'end'})});
 var last='',subTimer,curT=0,dur=0,playing=false;
-function setPlayIco(){if(acPlayIco)acPlayIco.nodeValue=playing?'⏸':'▶';if(acPlayLbl)acPlayLbl.textContent=playing?'Pauza':'Odtwórz'}
+function setPlayIco(){if(acPlayIco)acPlayIco.nodeValue=playing?'⏸':'▶'}
 window.addEventListener('message',function(e){if(e.origin.indexOf('youtube.com')===-1)return;var d;try{d=JSON.parse(e.data)}catch(_){return}if(d.event==='infoDelivery'&&d.info){if(typeof d.info.currentTime==='number'){curT=d.info.currentTime;var ch=getCh(curT);if(ch!==last){sub.textContent=ch;if(acTitle)acTitle.textContent=ch;last=ch;sub.classList.remove('fade');clearTimeout(subTimer);subTimer=setTimeout(function(){sub.classList.add('fade')},5000)}if(acCur)acCur.textContent=fmt(curT);if(dur>0&&acBar)acBar.style.width=(curT/dur*100)+'%'}if(typeof d.info.duration==='number'&&d.info.duration>0&&d.info.duration!==dur){dur=d.info.duration;if(acDur)acDur.textContent=fmt(dur)}if(typeof d.info.playerState==='number'){playing=(d.info.playerState===1);setPlayIco()}}if(d.event==='onStateChange'){playing=(d.info===1);setPlayIco()}});
 fr.addEventListener('load',function(){fr.contentWindow.postMessage(JSON.stringify({event:'listening'}),'*');cmd('addEventListener',['onStateChange'])});
 if(acPlay)acPlay.addEventListener('click',function(e){e.stopPropagation();cmd(playing?'pauseVideo':'playVideo')});
@@ -46,7 +46,7 @@ function show(){box.classList.remove('hidden');showBtn.classList.remove('on');sh
 hideBtn.addEventListener('click',function(e){e.stopPropagation();hide()});
 showBtn.addEventListener('click',show);
 var audioBtn=document.getElementById('yt-audio');
-audioBtn.addEventListener('click',function(e){e.stopPropagation();box.classList.toggle('audio')});
+audioBtn.addEventListener('click',function(e){e.stopPropagation();box.classList.toggle('audio');box.style.height='auto'});
 var barTimer;
 function showBars(){box.classList.add('bars');clearTimeout(barTimer);barTimer=setTimeout(function(){box.classList.remove('bars')},3000)}
 box.addEventListener('mouseenter',showBars);

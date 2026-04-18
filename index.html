@@ -93,10 +93,11 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #yt-box{position:sticky;top:1rem;background:#000;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.4);display:grid;grid-template-rows:0 auto 0;overflow:visible;min-width:200px;z-index:1000;transition:grid-template-rows .28s ease}
 #yt-box.bars{grid-template-rows:24px auto 38px}
 #yt-box.dragged{position:fixed;box-shadow:0 8px 32px rgba(0,0,0,.6)}
-#yt-bar-top{background:#141414;display:flex;align-items:center;justify-content:space-between;overflow:hidden;border-radius:10px 10px 0 0;opacity:0;transition:opacity .18s ease}
+#yt-bar-top{background:#141414;position:relative;display:flex;align-items:center;justify-content:flex-end;overflow:hidden;border-radius:10px 10px 0 0;opacity:0;transition:opacity .18s ease}
+#yt-bar-top #yt-hide{position:relative;z-index:2}
 #yt-bar-bottom{background:#0d0d0d;display:flex;align-items:center;justify-content:center;gap:8px;overflow:hidden;border-radius:0 0 10px 10px;opacity:0;transition:opacity .18s ease;padding:0 8px}
 #yt-box.bars #yt-bar-top,#yt-box.bars #yt-bar-bottom{opacity:1}
-#yt-drag{flex:1;align-self:stretch;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;display:flex;align-items:center;justify-content:center;padding:0 10px}
+#yt-drag{position:absolute;inset:0;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;display:flex;align-items:center;justify-content:center;z-index:1}
 #yt-drag::before{content:'';width:44px;height:4px;background:#3a3a3a;border-radius:3px;transition:background .18s ease,width .18s ease}
 #yt-drag:hover::before{background:#6a6a6a;width:60px}
 #yt-drag:active{cursor:grabbing}
@@ -143,11 +144,10 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 .ac-prog{flex:1;height:4px;background:#2a2a2a;border-radius:2px;cursor:pointer;position:relative;overflow:hidden}
 .ac-prog:hover{height:6px;margin-top:-1px}
 .ac-bar{position:absolute;left:0;top:0;bottom:0;background:#4a9eff;width:0;transition:width .25s linear;border-radius:2px}
-.ac-btns{display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap}
-.ac-btns button{background:none;border:0;color:#ccc;font-size:13px;cursor:pointer;height:32px;padding:0 12px;border-radius:16px;display:inline-flex;align-items:center;justify-content:center;font-family:inherit;line-height:1;gap:5px;font-weight:500;position:relative}
+.ac-btns{display:flex;justify-content:center;gap:10px;align-items:center}
+.ac-btns button{background:none;border:0;color:#ccc;font-size:15px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:inherit;padding:0;line-height:1;position:relative}
 .ac-btns button:hover{background:#1a1a1a;color:#fff}
-.ac-btns .lbl{font-size:11px;font-weight:500;opacity:.9}
-#ac-play{font-size:14px;background:#1b3a5c;color:#fff;height:36px;padding:0 16px}
+#ac-play{font-size:16px;background:#1b3a5c;color:#fff;width:40px;height:40px}
 #ac-play:hover{background:#2b5280;color:#fff}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -341,8 +341,8 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywa�
 </div>
 <footer>Opracowanie na podstawie odcinka Huberman Lab z 24 listopada 2025 · Gość: Dr Thaïs Aliabadi, MD</footer>
 </main>
-<aside id='yt-col' aria-label='Odtwarzacz wideo'><div id='yt-box'><div id='yt-bar-top'><div id='yt-drag' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; odtwarzacz w dowolne miejsce strony' aria-label='Przeci&#261;gnij'></div><button id='yt-hide' class='btn-tip' data-tip='Ukryj odtwarzacz wideo (w prawym g&oacute;rnym rogu pojawi si&#281; przycisk, aby go przywr&oacute;ci&#263;)' aria-label='Ukryj wideo'>&#10005;</button></div><div id='yt-content'><iframe id='yt-player' src='https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;cc_lang_pref=pl&amp;cc_load_policy=1&amp;origin=https://fylchsharptail.github.io' title='Huberman Lab ep. 256' allow='autoplay; encrypted-media' allowfullscreen loading='lazy'></iframe><div id='yt-subs' data-ph='Kliknij znacznik czasu lub odtw&oacute;rz wideo&hellip;'></div><div id='yt-audio-ctrl'><div class='ac-title'>&mdash;</div><div class='ac-time'><span class='ac-cur'>0:00</span><div class='ac-prog' title='Kliknij, aby przewin&#261;&#263;'><div class='ac-bar'></div></div><span class='ac-dur'>&mdash;</span></div><div class='ac-btns'><button id='ac-prev' class='btn-tip' data-tip='Przejd&#378; do pocz&#261;tku poprzedniego rozdzia&#322;u' aria-label='Poprzedni rozdzia&#322;'>&#9198;<span class='lbl'>Wstecz</span></button><button id='ac-play' class='btn-tip' data-tip='Odtw&oacute;rz lub zatrzymaj wideo' aria-label='Odtw&oacute;rz / Pauza'>&#9654;<span class='lbl' id='ac-play-lbl'>Odtw&oacute;rz</span></button><button id='ac-next' class='btn-tip' data-tip='Przejd&#378; do nast&#281;pnego rozdzia&#322;u' aria-label='Nast&#281;pny rozdzia&#322;'>&#9197;<span class='lbl'>Dalej</span></button></div></div></div><div id='yt-bar-bottom'><button id='yt-reset' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; i rozmiar odtwarzacza' aria-label='Resetuj pozycj&#281;'>&#8634;<span class='lbl'>Reset</span></button><button id='yt-audio' class='btn-tip' data-tip='Tryb tylko-d&#378;wi&#281;k: ukrywa obraz, zostawia odtwarzacz audio z rozdzia&#322;ami i sterowaniem' aria-label='Tylko d&#378;wi&#281;k'>&#9834;<span class='lbl'>Audio</span></button></div><div id='yt-rz'></div><div id='yt-rzl'></div><div id='yt-rztr'></div><div id='yt-rztl'></div></div></aside>
+<aside id='yt-col' aria-label='Odtwarzacz wideo'><div id='yt-box'><div id='yt-bar-top'><div id='yt-drag' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; odtwarzacz w dowolne miejsce strony' aria-label='Przeci&#261;gnij'></div><button id='yt-hide' class='btn-tip' data-tip='Ukryj odtwarzacz wideo (w prawym g&oacute;rnym rogu pojawi si&#281; przycisk, aby go przywr&oacute;ci&#263;)' aria-label='Ukryj wideo'>&#10005;</button></div><div id='yt-content'><iframe id='yt-player' src='https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;cc_lang_pref=pl&amp;cc_load_policy=1&amp;origin=https://fylchsharptail.github.io' title='Huberman Lab ep. 256' allow='autoplay; encrypted-media' allowfullscreen></iframe><div id='yt-subs' data-ph='Kliknij znacznik czasu lub odtw&oacute;rz wideo&hellip;'></div><div id='yt-audio-ctrl'><div class='ac-title'>&mdash;</div><div class='ac-time'><span class='ac-cur'>0:00</span><div class='ac-prog' title='Kliknij, aby przewin&#261;&#263;'><div class='ac-bar'></div></div><span class='ac-dur'>&mdash;</span></div><div class='ac-btns'><button id='ac-prev' class='btn-tip' data-tip='Przejd&#378; do pocz&#261;tku poprzedniego rozdzia&#322;u' aria-label='Poprzedni rozdzia&#322;'>&#9198;</button><button id='ac-play' class='btn-tip' data-tip='Odtw&oacute;rz lub zatrzymaj wideo' aria-label='Odtw&oacute;rz / Pauza'>&#9654;</button><button id='ac-next' class='btn-tip' data-tip='Przejd&#378; do nast&#281;pnego rozdzia&#322;u' aria-label='Nast&#281;pny rozdzia&#322;'>&#9197;</button></div></div></div><div id='yt-bar-bottom'><button id='yt-reset' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; i rozmiar odtwarzacza' aria-label='Resetuj pozycj&#281;'>&#8634;<span class='lbl'>Reset</span></button><button id='yt-audio' class='btn-tip' data-tip='Tryb tylko-d&#378;wi&#281;k: ukrywa obraz, zostawia odtwarzacz audio z rozdzia&#322;ami i sterowaniem' aria-label='Tylko d&#378;wi&#281;k'>&#9834;<span class='lbl'>Audio</span></button></div><div id='yt-rz'></div><div id='yt-rzl'></div><div id='yt-rztr'></div><div id='yt-rztl'></div></div></aside>
 <button id='yt-show' title='Poka&zacute; wideo' aria-label='Poka&zacute; wideo'>&#9654;</button>
 </div>
-<script src="player.js?v=5c4b08e306"></script>
+<script src="player.js?v=0197fd99cf"></script>
 </body></html>
