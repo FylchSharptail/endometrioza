@@ -130,7 +130,10 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #yt-box:hover #yt-rz,#yt-box:hover #yt-rzl,#yt-box:hover #yt-rztr,#yt-box:hover #yt-rztl{opacity:1}
 #yt-rn,#yt-rs,#yt-re,#yt-rw{opacity:0}
 #yt-box:hover #yt-rn,#yt-box:hover #yt-rs,#yt-box:hover #yt-re,#yt-box:hover #yt-rw{opacity:1}
-@media(max-width:1099px){#yt-box{position:fixed;bottom:0;left:0;right:0;top:auto;border-radius:10px 10px 0 0;width:auto}#yt-box.dragged{left:auto;right:auto;bottom:auto;width:auto;border-radius:10px}#yt-subs{display:none}}
+@media(max-width:1099px){#yt-box{position:fixed;bottom:0;left:0;right:0;top:auto;border-radius:10px 10px 0 0;width:auto}#yt-box.dragged{left:auto;right:auto;bottom:auto;width:auto;border-radius:10px}#yt-subs{display:none}
+#yt-box:not(.audio){max-height:25vh}
+#yt-box:not(.audio) #yt-content{min-height:0;overflow:hidden}
+#yt-box:not(.audio) iframe{width:auto!important;height:100%!important;max-width:100%;aspect-ratio:16/9;display:block;margin:0 auto}}
 .btn-tip{position:relative}
 .btn-tip::after{content:'';position:absolute;left:3px;right:3px;bottom:2px;height:2px;background:#4a9eff;transform:scaleX(0);transform-origin:left;pointer-events:none;border-radius:2px;opacity:.95}
 .btn-tip.pending::after{animation:tipFill 1s linear forwards}
@@ -157,15 +160,15 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #yt-rs{position:absolute;bottom:0;left:18px;right:18px;height:6px;cursor:ns-resize;touch-action:none;z-index:11}
 #yt-re{position:absolute;right:0;top:18px;bottom:18px;width:6px;cursor:ew-resize;touch-action:none;z-index:11}
 #yt-rw{position:absolute;left:0;top:18px;bottom:18px;width:6px;cursor:ew-resize;touch-action:none;z-index:11}
-#sn{position:fixed;right:10px;top:38.2vh;transform:translateY(-50%);background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:5px;display:flex;flex-direction:column;gap:2px;z-index:900;opacity:.45;transition:opacity .25s ease;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+#sn{position:fixed;right:10px;top:25vh;transform:translateY(-50%);background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:5px;display:flex;flex-direction:column;gap:2px;z-index:900;opacity:.45;transition:opacity .25s ease;box-shadow:0 4px 18px rgba(0,0,0,.3);overflow:visible}
 #sn.moved{transform:none}
-.sn-edge{height:0!important;opacity:0!important;overflow:hidden;pointer-events:none;transition:height .22s ease,opacity .18s ease}
-#sn:hover #sn-grip,#sn.open #sn-grip{height:22px!important;opacity:.55!important;pointer-events:auto}
-#sn:hover.moved #sn-rst,#sn.moved:hover #sn-rst,#sn.moved.open #sn-rst{height:22px!important;opacity:.55!important;pointer-events:auto}
-.sn-edge:hover{opacity:1!important;color:#fff!important}
-#sn-grip{cursor:grab;font-size:13px!important}
+.sn-edge{position:absolute!important;left:5px!important;right:5px!important;width:auto!important;height:28px!important;border-radius:14px!important;background:rgba(18,18,22,.88)!important;backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08)!important;color:#d0d0d0;display:flex;align-items:center;justify-content:center;font-family:inherit;box-sizing:border-box;opacity:0;pointer-events:none;transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .35s ease-out;z-index:-1;box-shadow:0 3px 10px rgba(0,0,0,.25);padding:0!important}
+#sn-grip{top:5px;transform:translateY(0);font-size:14px!important;cursor:grab}
 #sn-grip:active{cursor:grabbing}
-#sn-rst{font-size:15px!important}
+#sn-rst{bottom:5px;transform:translateY(0);font-size:15px!important}
+#sn:hover #sn-grip,#sn.open #sn-grip{opacity:.92;transform:translateY(calc(-100% - 3px));pointer-events:auto;z-index:1}
+#sn:hover.moved #sn-rst,#sn.moved:hover #sn-rst,#sn.moved.open #sn-rst{opacity:.92;transform:translateY(calc(100% + 3px));pointer-events:auto;z-index:1}
+.sn-edge:hover{opacity:1!important;color:#fff!important}
 #sn:hover,#sn.open{opacity:1}
 #sn button{width:34px;height:34px;border-radius:50%;background:transparent;border:0;color:#d0d0d0;font-size:21px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;transition:background .15s,color .15s;padding:0;line-height:1}
 #sn button:hover{background:rgba(255,255,255,.1);color:#fff}
