@@ -116,9 +116,29 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 @media(min-width:1100px){#yt-box.idle iframe{position:absolute!important;left:-9999px!important;top:0!important;width:320px!important;height:180px!important;aspect-ratio:auto!important}}
 #yt-box.audio iframe{position:absolute!important;left:-9999px!important;top:0!important;width:320px!important;height:180px!important;aspect-ratio:auto!important}
 #yt-rz{position:absolute;right:0;bottom:0;width:18px;height:18px;cursor:nwse-resize;touch-action:none;z-index:10}
-#yt-rz::after{content:'';position:absolute;right:3px;bottom:3px;width:10px;height:10px;border-right:2px solid #555;border-bottom:2px solid #555}
+#yt-rz::after{content:'';position:absolute;right:3px;bottom:3px;width:10px;height:10px;border-right:2px solid #888;border-bottom:2px solid #888}
 @media(max-width:1099px){#yt-box{position:fixed;bottom:0;left:0;right:0;top:auto;border-radius:8px 8px 0 0;width:auto}#yt-box.dragged{left:auto;right:auto;bottom:auto;width:auto;border-radius:8px}#yt-subs{display:none}#yt-box.idle{grid-template-columns:32px 1fr;transform:translateY(calc(100% - 32px))}}
-#yt-rzl{position:absolute;left:0;bottom:0;width:18px;height:18px;cursor:nesw-resize;touch-action:none;z-index:10}#yt-rzl::after{content:'';position:absolute;left:3px;bottom:3px;width:10px;height:10px;border-left:2px solid #555;border-bottom:2px solid #555}
+#yt-rzl{position:absolute;left:0;bottom:0;width:18px;height:18px;cursor:nesw-resize;touch-action:none;z-index:10}#yt-rzl::after{content:'';position:absolute;left:3px;bottom:3px;width:10px;height:10px;border-left:2px solid #888;border-bottom:2px solid #888}
+#yt-rztr{position:absolute;right:0;top:0;width:18px;height:18px;cursor:nesw-resize;touch-action:none;z-index:10}#yt-rztr::after{content:'';position:absolute;right:3px;top:3px;width:10px;height:10px;border-right:2px solid #888;border-top:2px solid #888}
+#yt-rztl{position:absolute;left:0;top:0;width:18px;height:18px;cursor:nwse-resize;touch-action:none;z-index:11}#yt-rztl::after{content:'';position:absolute;left:3px;top:3px;width:10px;height:10px;border-left:2px solid #888;border-top:2px solid #888}
+#yt-rz,#yt-rzl,#yt-rztr,#yt-rztl{opacity:0;transition:opacity .2s ease}
+#yt-box:hover #yt-rz,#yt-box:hover #yt-rzl,#yt-box:hover #yt-rztr,#yt-box:hover #yt-rztl{opacity:1}
+#yt-drag span{font-size:15px;line-height:1}
+#yt-drag button{font-size:13px}
+#yt-audio-ctrl{display:none;padding:12px 14px 14px;background:#0a0a0a;color:#eee;border-radius:0 0 8px 0}
+#yt-box.audio #yt-audio-ctrl{display:block}
+#yt-box.audio #yt-subs{display:none}
+#yt-box.audio #yt-content::before{display:none!important}
+.ac-title{font-size:12px;font-weight:600;color:#9cf;margin-bottom:10px;text-align:center;min-height:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.01em}
+.ac-time{display:flex;align-items:center;gap:8px;font-size:10px;color:#888;margin-bottom:10px;font-variant-numeric:tabular-nums}
+.ac-prog{flex:1;height:4px;background:#2a2a2a;border-radius:2px;cursor:pointer;position:relative;overflow:hidden}
+.ac-prog:hover{height:6px;margin-top:-1px}
+.ac-bar{position:absolute;left:0;top:0;bottom:0;background:#4a9eff;width:0;transition:width .25s linear;border-radius:2px}
+.ac-btns{display:flex;justify-content:center;gap:10px;align-items:center}
+.ac-btns button{background:none;border:0;color:#ccc;font-size:15px;cursor:pointer;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:inherit;padding:0;line-height:1}
+.ac-btns button:hover{background:#222;color:#fff}
+#ac-play{font-size:16px;background:#1b3a5c;color:#fff;width:38px;height:38px}
+#ac-play:hover{background:#2b5280;color:#fff}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Podsumowanie odcinka Huberman Lab (ep. 256) z dr Thaïs Aliabadi: endometrioza, PCOS, rak piersi, PMDD. Praktyczne informacje z odnośnikami do źródeł naukowych.">
@@ -311,8 +331,8 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywa�
 </div>
 <footer>Opracowanie na podstawie odcinka Huberman Lab z 24 listopada 2025 · Gość: Dr Thaïs Aliabadi, MD</footer>
 </main>
-<aside id='yt-col' aria-label='Odtwarzacz wideo'><div id='yt-box'><div id='yt-drag'><span>☰</span><button id='yt-reset' title='Resetuj pozycję'>✕</button><button id='yt-audio' title='Tylko dźwięk' aria-label='Tylko dźwięk'>♪</button><button id='yt-hide' title='Ukryj wideo' aria-label='Ukryj wideo'>V</button></div><div id='yt-content'><iframe id='yt-player' src='https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;cc_lang_pref=pl&amp;cc_load_policy=1&amp;origin=https://fylchsharptail.github.io' title='Huberman Lab ep. 256' allow='autoplay; encrypted-media' allowfullscreen loading='lazy'></iframe><div id='yt-subs' data-ph='Kliknij znacznik czasu lub odtwórz wideo…'></div></div><div id='yt-rz'></div><div id='yt-rzl'></div></div></aside>
-<button id='yt-show' title='Pokaż wideo' aria-label='Pokaż wideo'>V</button>
+<aside id='yt-col' aria-label='Odtwarzacz wideo'><div id='yt-box'><div id='yt-drag'><span title='Przeci&#261;gnij' aria-hidden='true'>&#10303;</span><button id='yt-reset' title='Resetuj pozycj&#281;' aria-label='Resetuj pozycj&#281;'>&#8634;</button><button id='yt-audio' title='Tylko d&#378;wi&#281;k' aria-label='Tylko d&#378;wi&#281;k'>&#9834;</button><button id='yt-hide' title='Ukryj wideo' aria-label='Ukryj wideo'>&#10005;</button></div><div id='yt-content'><iframe id='yt-player' src='https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;cc_lang_pref=pl&amp;cc_load_policy=1&amp;origin=https://fylchsharptail.github.io' title='Huberman Lab ep. 256' allow='autoplay; encrypted-media' allowfullscreen loading='lazy'></iframe><div id='yt-subs' data-ph='Kliknij znacznik czasu lub odtw&oacute;rz wideo&hellip;'></div><div id='yt-audio-ctrl'><div class='ac-title'>&mdash;</div><div class='ac-time'><span class='ac-cur'>0:00</span><div class='ac-prog' title='Przewi&#324;'><div class='ac-bar'></div></div><span class='ac-dur'>&mdash;</span></div><div class='ac-btns'><button id='ac-prev' title='Poprzedni rozdzia&#322;' aria-label='Poprzedni rozdzia&#322;'>&#9198;</button><button id='ac-play' title='Odtw&oacute;rz / Pauza' aria-label='Odtw&oacute;rz / Pauza'>&#9654;</button><button id='ac-next' title='Nast&#281;pny rozdzia&#322;' aria-label='Nast&#281;pny rozdzia&#322;'>&#9197;</button></div></div></div><div id='yt-rz'></div><div id='yt-rzl'></div><div id='yt-rztr'></div><div id='yt-rztl'></div></div></aside>
+<button id='yt-show' title='Poka&zacute; wideo' aria-label='Poka&zacute; wideo'>&#9654;</button>
 </div>
-<script src="player.js?v=ab44d75390"></script>
+<script src="player.js?v=df735f5a33"></script>
 </body></html>
