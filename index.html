@@ -92,7 +92,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 @media(min-width:1100px){#yt-box{position:sticky;top:1rem}}
 #yt-box.dragged{position:fixed!important;box-shadow:0 10px 40px rgba(0,0,0,.65);top:auto;bottom:auto}
 #yt-box.hidden{display:none}
-#yt-box iframe{width:100%;aspect-ratio:16/9;border:0;display:block;background:#000}
+#yt-box iframe{width:100%;aspect-ratio:16/9;border:0;display:block;background:#000;flex:1 1 auto;min-height:0}
 /* Bars: in-flow drawers, height 0 -> explicit */
 .yt-bar{height:0;opacity:0;overflow:hidden;flex-shrink:0;transition:height .3s cubic-bezier(.22,1,.36,1),opacity .2s ease-out;position:relative;background:#141414}
 #yt-bar-bottom{background:#0d0d0d}
@@ -116,7 +116,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 .btn-tip .lbl{font-size:10.5px;font-weight:500;opacity:.92}
 /* Content area */
 #yt-content{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:#000}
-#yt-subs{background:rgba(0,0,0,.85);color:#eee;font-size:13px;line-height:1.4;padding:6px 10px;min-height:24px;max-height:120px;overflow:hidden;transition:max-height .4s,padding .4s,opacity .3s}
+#yt-subs{background:rgba(0,0,0,.85);color:#eee;font-size:13px;line-height:1.4;padding:6px 10px;min-height:24px;max-height:120px;overflow:hidden;flex-shrink:0;transition:max-height .4s,padding .4s,opacity .3s}
 #yt-subs:empty::before{content:attr(data-ph);color:#666;font-style:italic}
 #yt-subs.fade{max-height:0;min-height:0;padding-top:0;padding-bottom:0;opacity:0}
 /* Audio mode: iframe offscreen, box content-sized */
@@ -124,7 +124,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #yt-box.audio iframe{position:absolute!important;left:-9999px!important;top:0!important;width:320px!important;height:180px!important;aspect-ratio:auto!important}
 #yt-box.audio #yt-subs{display:none}
 /* Audio controls */
-#yt-audio-ctrl{display:block;padding:12px 14px 14px;background:#0a0a0a;color:#eee}
+#yt-audio-ctrl{display:block;padding:12px 14px 14px;background:#0a0a0a;color:#eee;flex-shrink:0;min-height:96px}
 #yt-box:not(.audio) #yt-audio-ctrl{padding:6px 12px 8px}
 #yt-box:not(.audio) .ac-title{display:none}
 .ac-title{font-size:12px;font-weight:600;color:#9cf;margin-bottom:10px;text-align:center;min-height:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.01em}
@@ -186,7 +186,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 .tip-portal.top::before{top:100%;border-top-color:#1c1f26}
 .tip-portal.left::before{left:100%;top:50%;margin-left:0;margin-top:-6px;border-color:transparent;border-left-color:#1c1f26}
 /* ========== NAV PILL ========== */
-#sn{position:fixed;right:10px;top:20vh;display:flex;flex-direction:column;padding:4px;z-index:900;opacity:.5;overflow:hidden;background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:26px;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:opacity .25s ease}
+#sn{position:fixed;right:10px;top:20vh;display:flex;flex-direction:column;padding:4px;z-index:900;opacity:.5;overflow:hidden;background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:26px;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:opacity .25s ease,transform .42s cubic-bezier(.22,1,.36,1);transform:translateY(0)}
 #sn button{width:40px;height:40px;border-radius:50%;background:transparent;border:0;color:#d0d0d0;font-size:22px;cursor:pointer;display:grid;place-items:center;font-family:inherit;padding:0;line-height:1;flex-shrink:0;transition:background .15s,color .15s,max-height .42s cubic-bezier(.22,1,.36,1),opacity .28s}
 #sn button:hover{background:rgba(255,255,255,.1);color:#fff}
 #sn button.on{background:rgba(74,158,255,.25);color:#fff}
@@ -195,16 +195,16 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #sn-grip:active{cursor:grabbing}
 /* Hover-capable devices: reveal grip on pill hover, reset when moved+hover */
 @media(hover:hover){
-  #sn:hover{opacity:1}
+  #sn:hover{opacity:1;transform:translateY(-40px)}
   #sn:hover #sn-grip{max-height:40px;opacity:.85;pointer-events:auto}
   #sn.moved:hover #sn-rst{max-height:40px;opacity:.85;pointer-events:auto}
 }
 /* Touch / no-hover: tap to open */
-#sn.open{opacity:1}
+#sn.open{opacity:1;transform:translateY(-40px)}
 #sn.open #sn-grip{max-height:40px;opacity:.9;pointer-events:auto}
 #sn.open.moved #sn-rst{max-height:40px;opacity:.9;pointer-events:auto}
 @media(hover:none){
-  #sn{opacity:.9}
+  #sn{opacity:.9;transform:translateY(-40px)}
   #sn #sn-grip{max-height:40px;opacity:.75;pointer-events:auto}
   #sn.moved #sn-rst{max-height:40px;opacity:.75;pointer-events:auto}
 }
@@ -419,5 +419,5 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywa�
 <nav id='sn' aria-label='Nawigacja sekcji'><button id='sn-grip' class='btn-tip' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; panel nawigacji' aria-label='Przeci&#261;gnij panel'>&#8285;</button><button id='sn-top' class='btn-tip' data-tip='Przewi&#324; na g&oacute;r&#281; strony' aria-label='Do g&oacute;ry'>&#8593;</button><button id='sn-prev' class='btn-tip' data-tip='Poprzednia sekcja' aria-label='Poprzednia sekcja'>&#8249;</button><button id='sn-menu' class='btn-tip' data-tip='Lista wszystkich sekcji' aria-label='Menu sekcji'>&#9776;</button><button id='sn-next' class='btn-tip' data-tip='Nast&#281;pna sekcja' aria-label='Nast&#281;pna sekcja'>&#8250;</button><button id='sn-rst' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; panelu' aria-label='Resetuj pozycj&#281; panelu'>&#8634;</button></nav>
 <div id='sn-list' aria-hidden='true' role='menu'></div>
 </div>
-<script src="player.js?v=c9aac3d7f6"></script>
+<script src="player.js?v=5b1b9fa913"></script>
 </body></html>

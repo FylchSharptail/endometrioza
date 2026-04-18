@@ -95,11 +95,11 @@ function updAct(){var i=curSec();Array.prototype.forEach.call(snList.querySelect
 window.addEventListener('scroll',updAct,{passive:true});updAct();
 var snGrip=document.getElementById('sn-grip'),snRst=document.getElementById('sn-rst');
 var snD=null;
-function snStart(e){e.preventDefault();e.stopPropagation();var p=gxy(e),r=sn.getBoundingClientRect();snD={ox:p.x-r.left,oy:p.y-r.top};sn.style.transition='none'}
-function snMove(e){if(!snD)return;e.preventDefault();var p=gxy(e);sn.classList.add('moved');sn.style.right='auto';sn.style.left=Math.max(4,Math.min(p.x-snD.ox,innerWidth-sn.offsetWidth-4))+'px';sn.style.top=Math.max(4,Math.min(p.y-snD.oy,innerHeight-sn.offsetHeight-4))+'px'}
+function snStart(e){e.preventDefault();e.stopPropagation();var p=gxy(e),r=sn.getBoundingClientRect(),ct=parseFloat(getComputedStyle(sn).top)||0;snD={ox:p.x-r.left,oy:p.y-r.top,shift:r.top-ct};sn.style.transition='none'}
+function snMove(e){if(!snD)return;e.preventDefault();var p=gxy(e);sn.classList.add('moved');sn.style.right='auto';sn.style.left=Math.max(4,Math.min(p.x-snD.ox,innerWidth-sn.offsetWidth-4))+'px';var vt=Math.max(4,Math.min(p.y-snD.oy,innerHeight-sn.offsetHeight-4));sn.style.top=(vt-snD.shift)+'px'}
 function snEnd(){if(!snD)return;snD=null;sn.style.transition=''}
 if(snGrip){snGrip.addEventListener('mousedown',snStart);snGrip.addEventListener('touchstart',snStart,{passive:false})}
 document.addEventListener('mousemove',snMove);document.addEventListener('mouseup',snEnd);
 document.addEventListener('touchmove',snMove,{passive:false});document.addEventListener('touchend',snEnd);
-if(snRst)snRst.addEventListener('click',function(e){e.stopPropagation();sn.style.left='';sn.style.top='';sn.style.right='';sn.classList.remove('moved')})}
+if(snRst)snRst.addEventListener('click',function(e){e.stopPropagation();sn.style.left='';sn.style.top='';sn.style.right='';sn.classList.remove('moved')});var _bpMq=matchMedia('(max-width:1099px)');function _bpReset(){sn.style.left='';sn.style.top='';sn.style.right='';sn.classList.remove('moved','open');var bx=document.getElementById('yt-box');if(bx){bx.style.left='';bx.style.top='';bx.style.right='';bx.style.bottom='';bx.style.width='';bx.style.height='';bx.classList.remove('dragged')}}if(_bpMq.addEventListener)_bpMq.addEventListener('change',_bpReset);else _bpMq.addListener(_bpReset)}
 })();
