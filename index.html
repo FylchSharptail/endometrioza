@@ -160,13 +160,12 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #yt-rs{position:absolute;bottom:0;left:18px;right:18px;height:6px;cursor:ns-resize;touch-action:none;z-index:11}
 #yt-re{position:absolute;right:0;top:18px;bottom:18px;width:6px;cursor:ew-resize;touch-action:none;z-index:11}
 #yt-rw{position:absolute;left:0;top:18px;bottom:18px;width:6px;cursor:ew-resize;touch-action:none;z-index:11}
-#sn{position:fixed;right:10px;top:25vh;transform:translateY(-50%);background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:5px;display:flex;flex-direction:column;gap:2px;z-index:900;opacity:.45;transition:opacity .25s ease;box-shadow:0 4px 18px rgba(0,0,0,.3);overflow:hidden}
-#sn.moved{transform:none}
+#sn{position:fixed;right:10px;top:20vh;background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:26px;padding:4px;display:flex;flex-direction:column;gap:0;z-index:900;opacity:.45;transition:opacity .25s ease;box-shadow:0 4px 18px rgba(0,0,0,.3);overflow:hidden}
 #sn:hover,#sn.open{opacity:1}
 #sn button{width:40px;height:40px;border-radius:50%;background:transparent;border:0;color:#d0d0d0;font-size:25px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;transition:background .15s,color .15s;padding:0;line-height:1;flex-shrink:0}
-#sn-grip,#sn-rst{height:0;opacity:0;overflow:hidden;pointer-events:none;transition:height .45s cubic-bezier(.22,1,.36,1),opacity .3s ease-out}
-#sn:hover #sn-grip,#sn.open #sn-grip{height:40px;opacity:.85;pointer-events:auto}
-#sn:hover.moved #sn-rst,#sn.moved:hover #sn-rst,#sn.moved.open #sn-rst{height:40px;opacity:.85;pointer-events:auto}
+#sn-grip,#sn-rst{max-height:0;opacity:0;overflow:hidden;pointer-events:none;transition:max-height .42s cubic-bezier(.22,1,.36,1),opacity .28s ease-out}
+#sn:hover #sn-grip,#sn.open #sn-grip{max-height:40px;opacity:.85;pointer-events:auto}
+#sn.moved:hover #sn-rst,#sn.moved.open #sn-rst{max-height:40px;opacity:.85;pointer-events:auto}
 #sn-grip{cursor:grab}
 #sn-grip:active{cursor:grabbing}
 #sn button:hover{background:rgba(255,255,255,.1);color:#fff}
@@ -177,7 +176,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #sn-list a:hover{background:rgba(74,158,255,.18);color:#fff}
 #sn-list a.on{background:rgba(74,158,255,.22);color:#fff;font-weight:600}
 #sn-list::-webkit-scrollbar{width:6px}#sn-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px}
-@media(max-width:1099px){#sn{right:8px;padding:3px;opacity:.55}#sn button{width:36px;height:36px;font-size:22px}#sn:hover #sn-grip,#sn.open #sn-grip,#sn:hover.moved #sn-rst,#sn.moved:hover #sn-rst,#sn.moved.open #sn-rst{height:36px}#sn-list{right:54px;width:210px;font-size:12px}}
+@media(max-width:1099px){#sn{right:8px;padding:3px;opacity:.55}#sn button{width:36px;height:36px;font-size:22px}#sn:hover #sn-grip,#sn.open #sn-grip,#sn.moved:hover #sn-rst,#sn.moved.open #sn-rst{max-height:36px}#sn-list{right:54px;width:210px;font-size:12px}}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Podsumowanie odcinka Huberman Lab (ep. 256) z dr Thaïs Aliabadi: endometrioza, PCOS, rak piersi, PMDD. Praktyczne informacje z odnośnikami do źródeł naukowych.">
