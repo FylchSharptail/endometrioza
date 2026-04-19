@@ -26,7 +26,7 @@ if('IntersectionObserver' in window){
   document.querySelectorAll('h2[id]').forEach(function(h){io.observe(h)});
 }
 
-function toast(msg){var t=document.createElement('div');t.className='ux-toast';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},1800)}
+function toast(msg){var t=document.createElement('div');t.className='ux-toast fixed left-[50%] bottom-[24px] [transform:translate(-50%,_16px)] bg-[rgba(18,_18,_22,_0.96)] text-surface [padding:10px_16px] rounded-[10px] border-[1px] border-[rgba(255,_255,_255,_0.1)] [font:500_13px_Inter,_system-ui,_sans-serif] z-[10000] opacity-[0] pointer-events-none [transition:opacity_0.25s_cubic-bezier(.22,.9,.3,1),_transform_0.25s_cubic-bezier(.22,.9,.3,1)] shadow-[0_12px_32px_rgba(0,_0,_0,_0.4)] print:!hidden [@media(prefers-reduced-motion:reduce)]:![transition:opacity_0.01ms] [@media(prefers-reduced-motion:reduce)]:![transform:none] [&.show]:opacity-[1] [&.show]:[transform:translate(-50%,_0)]';t.textContent=msg;document.body.appendChild(t);requestAnimationFrame(function(){t.classList.add('show')});setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},300)},1800)}
 
 var hlSpans=[];
 function clearHL(){hlSpans.forEach(function(s){var p=s.parentNode;if(p){p.replaceChild(document.createTextNode(s.textContent),s);p.normalize()}});hlSpans=[]}
@@ -44,7 +44,7 @@ function applyHL(q){
     if(i<0)return;
     while(i>=0){
       if(i>last)frag.appendChild(document.createTextNode(t.slice(last,i)));
-      var sp=document.createElement('mark');sp.className='ux-hl';sp.textContent=t.slice(i,i+ql.length);
+      var sp=document.createElement('mark');sp.className='ux-hl bg-[rgba(255,_230,_90,_0.55)] text-[inherit] [padding:0_1px] rounded-[2px] print:!bg-[none] print:!text-[inherit]';sp.textContent=t.slice(i,i+ql.length);
       frag.appendChild(sp);hlSpans.push(sp);last=i+ql.length;i=low.indexOf(ql,last);
     }
     if(last<t.length)frag.appendChild(document.createTextNode(t.slice(last)));
@@ -56,10 +56,10 @@ function applyHL(q){
 var KEYS=[['Space','Odtwarzaj / pauza'],['← →','±5 s (Shift: ±10 s)'],['J L','−10 / +10 s'],['K','Pauza'],['N P','Następny / poprzedni rozdział'],['S','Wyszukiwanie'],['M','Menu sekcji'],['R','Tryb czytania'],['B','Zakładka bieżącej sekcji'],['Esc','Zamknij nakładkę'],['?','Ta lista skrótów']];
 function showKeys(){
   if(document.querySelector('.ux-overlay'))return;
-  var ov=document.createElement('div');ov.className='ux-overlay';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','Skróty klawiszowe');
-  var html='<div class="ux-panel"><h3>Skróty klawiszowe</h3><table>';
+  var ov=document.createElement('div');ov.className='ux-overlay fixed inset-[0] bg-[rgba(0,_0,_0,_0.55)] backdrop-blur-[6px] z-[10001] flex items-center justify-center p-[20px] opacity-[0] [transition:opacity_0.2s_cubic-bezier(.22,.9,.3,1)] print:!hidden [@media(prefers-reduced-motion:reduce)]:![transition:opacity_0.01ms] [@media(prefers-reduced-motion:reduce)]:![transform:none] [&.show]:opacity-[1] [&.show]:[&_.ux-panel]:[transform:scale(1)]';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','Skróty klawiszowe');
+  var html='<div class="ux-panel bg-[rgba(22,_22,_28,_0.98)] text-[#eaeaea] border-[1px] border-[rgba(255,_255,_255,_0.1)] rounded-[14px] [padding:22px_24px] max-w-[420px] w-[100%] shadow-[0_20px_60px_rgba(0,_0,_0,_0.5)] [transform:scale(0.94)] [transition:transform_0.2s_cubic-bezier(.34,1.3,.64,1)] [&_h3]:[margin:0_0_14px] [&_h3]:text-[15px] [&_h3]:font-semibold [&_h3]:text-surface [&_h3]:tracking-[0.01em] [&_table]:w-[100%] [&_table]:border-collapse [&_table]:text-[12.5px] [&_td]:[padding:5px_8px] [&_td]:align-middle [&_td:first-child]:w-[130px] [&_td:first-child]:whitespace-nowrap [&_kbd]:inline-block [&_kbd]:min-w-[22px] [&_kbd]:[padding:2px_7px] [&_kbd]:mr-[3px] [&_kbd]:bg-[rgba(255,_255,_255,_0.08)] [&_kbd]:border-[1px] [&_kbd]:border-[rgba(255,_255,_255,_0.14)] [&_kbd]:border-b-[2px] [&_kbd]:rounded-[5px] [&_kbd]:[font:500_11px_ui-monospace,_monospace] [&_kbd]:text-surface [&_kbd]:text-center [@media(prefers-reduced-motion:reduce)]:![transition:opacity_0.01ms] [@media(prefers-reduced-motion:reduce)]:![transform:none]"><h3>Skróty klawiszowe</h3><table>';
   KEYS.forEach(function(k){html+='<tr><td><kbd>'+k[0].split(' ').join('</kbd> <kbd>')+'</kbd></td><td>'+k[1]+'</td></tr>'});
-  html+='</table><button type="button" class="ux-close">Zamknij (Esc)</button></div>';
+  html+='</table><button type="button" class="ux-close mt-[14px] w-[100%] p-[9px] bg-[rgba(74,_158,_255,_0.2)] border-[1px] border-[rgba(74,_158,_255,_0.35)] rounded-[8px] text-[#cfe2ff] [font:500_13px_Inter,_system-ui,_sans-serif] cursor-pointer [transition:background_180ms_cubic-bezier(.22,.9,.3,1)] hover:bg-[rgba(74,_158,_255,_0.32)]">Zamknij (Esc)</button></div>';
   ov.innerHTML=html;document.body.appendChild(ov);requestAnimationFrame(function(){ov.classList.add('show')});
   function close(){ov.classList.remove('show');setTimeout(function(){ov.remove()},250);document.removeEventListener('keydown',onK)}
   ov.querySelector('.ux-close').addEventListener('click',close);
@@ -140,7 +140,7 @@ function buildMenu(){
   snList.querySelectorAll('a').forEach(function(a){
     if(a.querySelector('.sn-star'))return;
     var id=a.hash.slice(1);
-    var star=document.createElement('span');star.className='sn-star';star.textContent=S.bookmarks.indexOf(id)>=0?'★':'☆';
+    var star=document.createElement('span');star.className='sn-star flex-[0_0_auto] w-[18px] text-center text-[rgba(255,_255,_255,_0.35)] text-[13px] leading-[1] cursor-pointer select-none [transition:color_180ms_cubic-bezier(.22,.9,.3,1),_transform_180ms_cubic-bezier(.22,.9,.3,1)] hover:text-[#ffd666] hover:[transform:scale(1.15)]';star.textContent=S.bookmarks.indexOf(id)>=0?'★':'☆';
     star.setAttribute('role','button');star.setAttribute('tabindex','0');star.setAttribute('aria-label','Przełącz zakładkę');
     function tog(e){e.preventDefault();e.stopPropagation();toggleBookmark(id)}
     star.addEventListener('click',tog);star.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){tog(e)}});
@@ -177,11 +177,11 @@ function refreshResume(){
 function renderBookmarks(){
   if(!bookmarksBox)return;
   if(!S.bookmarks.length){bookmarksBox.innerHTML='';return}
-  var html='<div class="sn-bm-h">Zakładki</div>';
+  var html='<div class="sn-bm-h text-[10.5px] uppercase tracking-[0.08em] text-[rgba(255,_255,_255,_0.45)] [padding:2px_12px_4px] font-semibold">Zakładki</div>';
   S.bookmarks.forEach(function(id){
     var h=document.getElementById(id);if(!h)return;
     var txt=h.textContent.replace(/\s*\d+:\d+(?::\d+)?\s*$/,'').trim();
-    html+='<a href="#'+id+'" data-bm="'+id+'"><span class="sn-bm-t">'+txt.replace(/</g,'&lt;')+'</span><span class="sn-star" role="button" tabindex="0" aria-label="Usuń zakładkę">★</span></a>';
+    html+='<a href="#'+id+'" data-bm="'+id+'"><span class="sn-bm-t flex-1 overflow-hidden text-ellipsis whitespace-nowrap">'+txt.replace(/</g,'&lt;')+'</span><span class="sn-star flex-[0_0_auto] w-[18px] text-center text-[rgba(255,_255,_255,_0.35)] text-[13px] leading-[1] cursor-pointer select-none [transition:color_180ms_cubic-bezier(.22,.9,.3,1),_transform_180ms_cubic-bezier(.22,.9,.3,1)] hover:text-[#ffd666] hover:[transform:scale(1.15)]" role="button" tabindex="0" aria-label="Usuń zakładkę">★</span></a>';
   });
   bookmarksBox.innerHTML=html;
   bookmarksBox.querySelectorAll('.sn-star').forEach(function(s){s.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggleBookmark(s.parentNode.dataset.bm)})});
