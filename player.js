@@ -66,7 +66,17 @@ function hide(){
     showBtn._tipT=setTimeout(function(){hideTip();showBtn.classList.remove('pulse')},3000);
   },500);
 }
-function show(){clearTimeout(showBtn._tipT);hideTip();showBtn.classList.remove('on','pulse');box.classList.remove('hidden','hiding');box.style.transform='';box.style.opacity='';showBars()}
+function show(){clearTimeout(showBtn._tipT);hideTip();showBtn.classList.remove('on','pulse');box.classList.remove('hidden','hiding','scrolling');box.style.transform='';box.style.opacity='';showBars()}
+// Mobile: auto-shrink player during scroll, restore ~700ms after scroll stops
+if(matchMedia('(max-width:1099px)').matches){
+  var _scrT,_scrY=scrollY;
+  addEventListener('scroll',function(){
+    if(Math.abs(scrollY-_scrY)<4)return;_scrY=scrollY;
+    if(!box.classList.contains('hidden')&&!box.classList.contains('hiding'))box.classList.add('scrolling');
+    clearTimeout(_scrT);
+    _scrT=setTimeout(function(){box.classList.remove('scrolling')},700);
+  },{passive:true});
+}
 hideBtn.addEventListener('click',function(e){e.stopPropagation();hide()});
 showBtn.addEventListener('click',show);
 var audioBtn=document.getElementById('yt-audio');

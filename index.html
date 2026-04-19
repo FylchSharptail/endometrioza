@@ -98,6 +98,11 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #yt-box.dragged{position:fixed!important;box-shadow:0 10px 40px rgba(0,0,0,.65);top:auto;bottom:auto}
 #yt-box.hiding{transition:transform .5s var(--ease),opacity .4s var(--ease);transform-origin:100% 0%;pointer-events:none}
 #yt-box.hidden{display:none}
+/* Mobile: shrink out of the way during active scroll so content underneath stays tappable */
+@media(max-width:1099px){
+  #yt-box{transition:transform .35s var(--ease),opacity .25s var(--ease),height .3s var(--ease)}
+  #yt-box.scrolling:not(.hiding):not(.hidden){transform:translateY(calc(100% - 6px));opacity:.55;pointer-events:none}
+}
 .yt-vid-wrap{display:flex;flex:1 1 auto;min-height:0;overflow:hidden;aspect-ratio:16/9;max-height:1000px;opacity:1;transition:max-height var(--dur) var(--ease),opacity var(--dur-fast) var(--ease)}
 #yt-box iframe{width:100%;height:100%;border:0;display:block;background:#000;flex:1 1 auto;min-height:0}
 #yt-box.audio .yt-vid-wrap{max-height:0;opacity:0}
@@ -431,5 +436,5 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem po 40. r.ż. mo
 <button id='yt-show' class='btn-tip' data-tip='Kliknij tutaj, aby przywr&oacute;ci&#263; odtwarzacz' title='Poka&zacute; wideo' aria-label='Poka&zacute; wideo'>&#9654;</button>
 <nav id='sn' aria-label='Nawigacja sekcji'><button id='sn-grip' class='btn-tip' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; panel nawigacji' aria-label='Przeci&#261;gnij panel'>&#8285;</button><button id='sn-top' class='btn-tip' data-tip='Przewi&#324; na g&oacute;r&#281; strony' aria-label='Do g&oacute;ry'>&#8593;</button><button id='sn-prev' class='btn-tip' data-tip='Poprzednia sekcja' aria-label='Poprzednia sekcja'>&#8249;</button><button id='sn-menu' class='btn-tip' data-tip='Lista wszystkich sekcji' aria-label='Menu sekcji'>&#9776;</button><button id='sn-next' class='btn-tip' data-tip='Nast&#281;pna sekcja' aria-label='Nast&#281;pna sekcja'>&#8250;</button><button id='sn-rst' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; panelu' aria-label='Resetuj pozycj&#281; panelu'>&#8634;</button><div id='sn-list' aria-hidden='true' role='menu'></div></nav>
 </div>
-<script src="player.js?v=27e2a078cc"></script>
+<script src="player.js?v=2c3140db02"></script>
 </body></html>
