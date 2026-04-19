@@ -7,7 +7,8 @@
 <style type="text/css">@charset "utf-8";
 :root { --bg:#f7f8fa; --surface:#fff; --text:#1c1f26; --muted:#71767e; --accent:#1b3a5c; --accent-light:#e6edf5; --border:#dde1e7; --radius:10px; --warn:#8b6914; --warn-bg:#fdf6e3; --purple:#7c5cbf; --purple-bg:#faf8ff; --shadow-sm:0 1px 2px rgba(0,0,0,0.04); --shadow-md:0 8px 24px rgba(27,58,92,0.08); }
 * { margin:0; padding:0; box-sizing: border-box; }
-body { font-family: Inter, system-ui, sans-serif; background:var(--bg); color:var(--text); line-height:1.72; font-size:15px; -webkit-font-smoothing: antialiased; text-rendering: optimizelegibility; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { font-family: Inter, system-ui, sans-serif; background:var(--bg); color:var(--text); line-height:1.72; font-size:15px; -webkit-font-smoothing: antialiased; text-rendering: optimizelegibility; overflow-x: hidden; }
 .hero { background:linear-gradient(rgb(27,58,92) 0%,rgb(35,72,111) 100%); color:rgb(255,255,255); padding:2.7rem 2rem 1.35rem; position: relative; }
 .hero-inner { max-width:920px; margin:0 auto; }
 .hero h1 { font-size:1.7rem; font-weight:700; letter-spacing:-0.025em; line-height:1.18; }
@@ -196,46 +197,43 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 .tip-portal.bottom::before{bottom:100%;border-bottom-color:#1c1f26}
 .tip-portal.top::before{top:100%;border-top-color:#1c1f26}
 .tip-portal.left::before{left:100%;top:50%;margin-left:0;margin-top:-6px;border-color:transparent;border-left-color:#1c1f26}
-/* ========== NAV PILL ========== */
-#sn{position:fixed;right:10px;top:20vh;display:flex;flex-direction:column;padding:4px;z-index:1050;opacity:.5;overflow:visible;background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:26px;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:opacity .25s ease,transform .42s cubic-bezier(.22,1,.36,1);transform:translateY(0)}
-#sn button{width:40px;height:40px;border-radius:50%;background:transparent;border:0;color:#d0d0d0;font-size:22px;cursor:pointer;display:grid;place-items:center;font-family:inherit;padding:0;line-height:1;flex-shrink:0;transition:background .15s,color .15s,max-height .42s cubic-bezier(.22,1,.36,1),opacity .28s}
+/* ========== NAV PILL (horizontal, top-centered) ========== */
+#sn{position:fixed;top:10px;left:50%;transform:translateX(-50%);display:flex;flex-direction:row;align-items:center;padding:4px;gap:0;z-index:1050;opacity:.75;overflow:visible;background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:26px;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:opacity .25s ease,background .25s ease}
+#sn.moved{transform:none}
+#sn:hover,#sn.open{opacity:1}
+#sn button{width:40px;height:40px;border-radius:50%;background:transparent;border:0;color:#d0d0d0;font-size:22px;cursor:pointer;display:grid;place-items:center;font-family:inherit;padding:0;line-height:1;flex-shrink:0;transition:background .15s,color .15s,max-width .42s cubic-bezier(.22,1,.36,1),opacity .28s,margin .42s cubic-bezier(.22,1,.36,1)}
 #sn button:hover{background:rgba(255,255,255,.1);color:#fff}
 #sn button.on{background:rgba(74,158,255,.25);color:#fff}
-#sn-grip,#sn-rst{max-height:0;opacity:0;overflow:hidden;pointer-events:none}
-#sn-grip{cursor:grab;font-size:18px}
+#sn-grip,#sn-rst{max-width:0;opacity:0;overflow:hidden;pointer-events:none;margin:0;padding:0}
+#sn-grip{cursor:grab;font-size:18px;transform:rotate(90deg)}
 #sn-grip:active{cursor:grabbing}
-/* Hover-capable devices: reveal grip on pill hover, reset when moved+hover */
+/* Hover-capable devices: reveal grip on pill hover, rst when moved+hover */
 @media(hover:hover){
-  #sn:hover{opacity:1;transform:translateY(-40px)}
-  #sn:hover #sn-grip{max-height:40px;opacity:.85;pointer-events:auto}
-  #sn.moved:hover #sn-rst{max-height:40px;opacity:.85;pointer-events:auto}
+  #sn:hover #sn-grip{max-width:40px;opacity:.85;pointer-events:auto}
+  #sn.moved:hover #sn-rst{max-width:40px;opacity:.85;pointer-events:auto}
 }
-/* Touch / no-hover: tap to open */
-#sn.open{opacity:1;transform:translateY(-40px)}
-#sn.open #sn-grip{max-height:40px;opacity:.9;pointer-events:auto}
-#sn.open.moved #sn-rst{max-height:40px;opacity:.9;pointer-events:auto}
+/* Touch / open state: always reveal grip */
+#sn.open #sn-grip{max-width:40px;opacity:.9;pointer-events:auto}
+#sn.open.moved #sn-rst{max-width:40px;opacity:.9;pointer-events:auto}
 @media(hover:none){
-  #sn{opacity:.9;transform:translateY(-40px)}
-  #sn #sn-grip{max-height:40px;opacity:.75;pointer-events:auto}
-  #sn.moved #sn-rst{max-height:40px;opacity:.75;pointer-events:auto}
+  #sn{opacity:.92}
+  #sn #sn-grip{max-width:40px;opacity:.75;pointer-events:auto}
+  #sn.moved #sn-rst{max-width:40px;opacity:.75;pointer-events:auto}
 }
-/* Section list: CSS-only positioning, anchored to pill via position:absolute */
-#sn-list{position:absolute;width:240px;max-height:70vh;padding:6px;z-index:1049;background:rgba(18,18,22,.92);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);overflow-y:auto;opacity:0;pointer-events:none;top:50%;transform:translateY(-50%) scale(.88);transition:opacity var(--dur-fast) var(--ease),transform var(--dur) var(--ease-spring)}
-/* Default: menu sits to the LEFT of the pill (pill usually lives on right edge) */
-#sn-list,#sn-list.on-left{right:calc(100% + 10px);left:auto;transform-origin:right center}
-/* When pill is on the left half of the viewport, flip menu to the RIGHT */
-#sn-list.on-right{left:calc(100% + 10px);right:auto;transform-origin:left center}
-#sn-list.open{opacity:1;pointer-events:auto;transform:translateY(-50%) scale(1)}
+/* Section list: drops BELOW the pill, centered; flips above when low on space */
+#sn-list{position:absolute;left:50%;top:calc(100% + 8px);width:260px;max-height:70vh;padding:6px;z-index:1049;background:rgba(18,18,22,.92);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);overflow-y:auto;opacity:0;pointer-events:none;transform:translateX(-50%) scale(.88);transform-origin:top center;transition:opacity var(--dur-fast) var(--ease),transform var(--dur) var(--ease-spring)}
+#sn-list.above{top:auto;bottom:calc(100% + 8px);transform-origin:bottom center}
+#sn-list.open{opacity:1;pointer-events:auto;transform:translateX(-50%) scale(1)}
 #sn-list a{display:block;padding:7px 12px;color:#d0d0d0;text-decoration:none;font-size:12.5px;border-radius:7px;line-height:1.35}
 #sn-list a:hover{background:rgba(74,158,255,.18);color:#fff}
 #sn-list a.on{background:rgba(74,158,255,.22);color:#fff;font-weight:600}
 #sn-list::-webkit-scrollbar{width:6px}
 #sn-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px}
 @media(max-width:1099px){
-  #sn{right:8px;padding:3px}
+  #sn{padding:3px}
   #sn button{width:38px;height:38px;font-size:20px}
-  #sn.open #sn-grip,#sn.open.moved #sn-rst{max-height:38px}
-  #sn-list{width:210px;font-size:12px}
+  #sn.open #sn-grip,#sn.open.moved #sn-rst,#sn:hover #sn-grip,#sn.moved:hover #sn-rst{max-width:38px}
+  #sn-list{width:220px;font-size:12px}
 }
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -295,7 +293,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 <li>Ból podczas głębokiej penetracji w trakcie stosunku</li>
 <li>Bolesne wypróżnienia w okolicy miesiączki</li>
 <li>Ciągłe wzdęcia</li>
-<li>Nawracające objawy pęcherza / zakażeń układu moczowego z negatywnymi posiewami</li>
+<li>Nawracające objawy zapalenia pęcherza / zakażeń układu moczowego z negatywnymi posiewami</li>
 <li>Ból promieniujący do nóg</li>
 <li>Ból narastający z roku na rok, obejmujący coraz większą część cyklu</li>
 </ul>
@@ -343,7 +341,7 @@ Rozważ zamrożenie jajeczek, szczególnie jeśli masz endometriozę lub obniżo
 <p data-cell-id="s6-prev">PCOS dotyka 8–13% kobiet w wieku rozrodczym wg metaanalizy globalnej (kryteria rotterdamskie).<sup class="ref"><a href="#src-01">[1]</a>,<a href="#src-13">[13]</a></sup> Dr Aliabadi podaje wyższy odsetek (15–20%), co może odzwierciedlać różnice populacyjne. Zdaniem Dr Aliabadi ponad 50% pacjentek z PCOS może mieć jednocześnie endometriozę. <em>To obserwacja kliniczna dr Aliabadi, a nie potwierdzony szacunek z literatury; dotychczasowe badania podają bardzo różne odsetki współwystępowania.</em></p>
 <h3>Diagnoza — 2 z 3 kryteriów (Rotterdam)</h3>
 <div class="card-grid">
-<div class="card" data-cell-id="s6-rott1"><b>1. Objawy wysokich androgenów</b>Trądzik, owłosienie twarzy i ciała (hirsutyzm), łysienie typu męskiego. Normalne testosteron we krwi nie wyklucza PCOS.</div>
+<div class="card" data-cell-id="s6-rott1"><b>1. Objawy wysokich androgenów</b>Trądzik, owłosienie twarzy i ciała (hirsutyzm), łysienie typu męskiego. Prawidłowe stężenie testosteronu we krwi nie wyklucza PCOS.</div>
 <div class="card" data-cell-id="s6-rott2"><b>2. Zaburzenia owulacji</b>Nieregularne miesiączki, cykle dłuższe niż 35 dni, mniej niż 8 miesiączek rocznie. Według dr Aliabadi brak owulacji może dotyczyć 70–80% pacjentek z PCOS, nawet przy pozornie regularnych krwawieniach.</div>
 </div>
 <div class="card" data-cell-id="s6-rott3"><b>3. Obraz PCOS na USG lub podwyższone AMH</b>
@@ -384,7 +382,7 @@ Policystyczne jajniki w badaniu ultrasonograficznym lub podwyższony poziom horm
 <div class="card" data-cell-id="s9-ssri"><b>Leczenie: SSRI</b>
 SSRI (Prozac, Zoloft) są skuteczne w leczeniu PMDD zarówno w dawkowaniu ciągłym, jak i pulsacyjnym (10–14 dni fazy lutealnej). Przegląd Cochrane wskazuje, że dawkowanie ciągłe jest prawdopodobnie skuteczniejsze.<sup class="ref"><a href="#src-07">[7]</a></sup> Dr Aliabadi preferuje podejście pulsacyjne.</div>
 <div class="card" data-cell-id="s9-peri"><b>Po 40. roku życia</b>
-Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywać na perimenopause, nie na PMDD. Warto to rozróżnić.</div>
+Nagłe pojawienie się objawów afektywnych związanych z cyklem po 40. r.ż. może wskazywać na perimenopauzę, a nie na PMDD. Warto to rozróżnić.</div>
 </div>
 <h2 id="checklista"><span class="n">10.</span> Praktyczna checklista <a class="ts" href="#" data-t="5522">1:32:02</a></h2>
 <ol class="rec">
@@ -433,5 +431,5 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywa�
 <button id='yt-show' class='btn-tip' data-tip='Kliknij tutaj, aby przywr&oacute;ci&#263; odtwarzacz' title='Poka&zacute; wideo' aria-label='Poka&zacute; wideo'>&#9654;</button>
 <nav id='sn' aria-label='Nawigacja sekcji'><button id='sn-grip' class='btn-tip' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; panel nawigacji' aria-label='Przeci&#261;gnij panel'>&#8285;</button><button id='sn-top' class='btn-tip' data-tip='Przewi&#324; na g&oacute;r&#281; strony' aria-label='Do g&oacute;ry'>&#8593;</button><button id='sn-prev' class='btn-tip' data-tip='Poprzednia sekcja' aria-label='Poprzednia sekcja'>&#8249;</button><button id='sn-menu' class='btn-tip' data-tip='Lista wszystkich sekcji' aria-label='Menu sekcji'>&#9776;</button><button id='sn-next' class='btn-tip' data-tip='Nast&#281;pna sekcja' aria-label='Nast&#281;pna sekcja'>&#8250;</button><button id='sn-rst' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; panelu' aria-label='Resetuj pozycj&#281; panelu'>&#8634;</button><div id='sn-list' aria-hidden='true' role='menu'></div></nav>
 </div>
-<script src="player.js?v=e033e02fe2"></script>
+<script src="player.js?v=27e2a078cc"></script>
 </body></html>
