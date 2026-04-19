@@ -240,6 +240,86 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
   #sn-grip,#sn-rst{width:38px;height:38px}
   #sn-list{width:220px;font-size:12px}
 }
+/* UX layer: resume, search, bookmarks, tools footer */
+#sn-resume{display:block;width:100%;margin:0 0 6px;padding:8px 10px;background:linear-gradient(135deg,rgba(74,158,255,.22),rgba(74,158,255,.1));border:1px solid rgba(74,158,255,.35);border-radius:8px;color:#cfe2ff;font:600 12.5px Inter,system-ui,sans-serif;text-align:left;cursor:pointer;transition:background var(--dur-fast) var(--ease)}
+#sn-resume:hover{background:linear-gradient(135deg,rgba(74,158,255,.32),rgba(74,158,255,.16))}
+#sn-resume[hidden]{display:none}
+#sn-sh{position:relative;margin:0 0 4px;padding:0}
+#sn-sh input{width:100%;padding:6px 32px 6px 10px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:7px;color:#eaeaea;font:12.5px Inter,system-ui,sans-serif;outline:none}
+#sn-sh input:focus{border-color:rgba(74,158,255,.5);background:rgba(0,0,0,.5)}
+#sn-sh input::-webkit-search-cancel-button{filter:invert(1) opacity(.7)}
+#sn-qc{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10.5px;color:rgba(255,255,255,.45);pointer-events:none}
+#sn-list a{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.sn-star{flex:0 0 auto;width:18px;text-align:center;color:rgba(255,255,255,.35);font-size:13px;line-height:1;cursor:pointer;user-select:none;transition:color var(--dur-fast) var(--ease),transform var(--dur-fast) var(--ease)}
+.sn-star:hover{color:#ffd666;transform:scale(1.15)}
+#sn-list a .sn-star{pointer-events:auto}
+#sn-bm{margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08)}
+#sn-bm:empty{display:none}
+.sn-bm-h{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.45);padding:2px 12px 4px;font-weight:600}
+#sn-bm a{background:rgba(255,214,102,.05)}
+#sn-bm a:hover{background:rgba(255,214,102,.14)}
+.sn-bm-t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#sn-foot{display:flex;gap:4px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08)}
+#sn-foot button{flex:1;padding:6px 4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;color:#d0d0d0;font:12px Inter,system-ui,sans-serif;cursor:pointer;transition:background var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease)}
+#sn-foot button:hover{background:rgba(74,158,255,.18);color:#fff;border-color:rgba(74,158,255,.3)}
+/* Highlight */
+mark.ux-hl{background:rgba(255,230,90,.55);color:inherit;padding:0 1px;border-radius:2px}
+/* Toast */
+.ux-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);background:rgba(18,18,22,.96);color:#fff;padding:10px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.1);font:500 13px Inter,system-ui,sans-serif;z-index:10000;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.ux-toast.show{opacity:1;transform:translate(-50%,0)}
+/* Keys help overlay */
+.ux-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:10001;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .2s var(--ease)}
+.ux-overlay.show{opacity:1}
+.ux-panel{background:rgba(22,22,28,.98);color:#eaeaea;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:22px 24px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:scale(.94);transition:transform .2s var(--ease-spring)}
+.ux-overlay.show .ux-panel{transform:scale(1)}
+.ux-panel h3{margin:0 0 14px;font-size:15px;font-weight:600;color:#fff;letter-spacing:.01em}
+.ux-panel table{width:100%;border-collapse:collapse;font-size:12.5px}
+.ux-panel td{padding:5px 8px;vertical-align:middle}
+.ux-panel td:first-child{width:130px;white-space:nowrap}
+.ux-panel kbd{display:inline-block;min-width:22px;padding:2px 7px;margin-right:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-bottom-width:2px;border-radius:5px;font:500 11px ui-monospace,monospace;color:#fff;text-align:center}
+.ux-close{margin-top:14px;width:100%;padding:9px;background:rgba(74,158,255,.2);border:1px solid rgba(74,158,255,.35);border-radius:8px;color:#cfe2ff;font:500 13px Inter,system-ui,sans-serif;cursor:pointer;transition:background var(--dur-fast) var(--ease)}
+.ux-close:hover{background:rgba(74,158,255,.32)}
+/* Reading mode */
+body.ux-reading{background:#fbfaf6}
+body.ux-reading .wrap{max-width:680px}
+body.ux-reading{font-size:16px;line-height:1.82}
+body.ux-reading p{margin-bottom:1em}
+body.ux-reading h2{font-size:1.25rem;margin-top:3.2rem}
+body.ux-reading #yt-box{opacity:.55;transition:opacity var(--dur) var(--ease)}
+body.ux-reading #yt-box:hover,body.ux-reading #yt-box:focus-within{opacity:1}
+body.ux-reading #sn{opacity:.6}
+body.ux-reading #sn:hover,body.ux-reading #sn:focus-within{opacity:1}
+/* Print */
+@media print{
+  #sn,#yt-box,.skip-link,.ux-toast,.ux-overlay{display:none!important}
+  body{background:#fff!important;color:#000!important;font-size:11pt;line-height:1.55}
+  .wrap{max-width:none;padding:0;margin:0}
+  .hero{background:none!important;color:#000!important;padding:0 0 1rem;border-bottom:2px solid #000}
+  .hero h1{font-size:18pt}
+  .hero .sub,.hero-meta{color:#333!important;opacity:1}
+  h2{color:#000!important;border-bottom:1px solid #999;page-break-after:avoid;break-after:avoid}
+  h3{color:#000!important;page-break-after:avoid;break-after:avoid}
+  p,li,td{orphans:3;widows:3}
+  .card,table{page-break-inside:avoid;break-inside:avoid;border:1px solid #999!important;box-shadow:none!important}
+  a{color:#000!important;text-decoration:underline}
+  a[href^="http"]:after{content:" [" attr(href) "]";font-size:9pt;color:#555;word-break:break-all}
+  a[href^="#"]:after{content:""}
+  .ts{background:none!important;color:#000!important;padding:0!important;border:0!important}
+  .ts:before{content:"[" attr(data-t) "s] "}
+  mark.ux-hl{background:none!important;color:inherit!important}
+  @page{margin:18mm}
+  body:after{content:"Materiał edukacyjny — nie stanowi porady medycznej. Źródło: https://fylchsharptail.github.io/endometrioza/";display:block;margin-top:2rem;padding-top:1rem;border-top:1px solid #999;font-size:9pt;font-style:italic;color:#555}
+}
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  #yt-show.pulse,#yt-box.scrolling{animation:none!important}
+  .ux-toast,.ux-overlay,.ux-panel{transition:opacity .01ms!important;transform:none!important}
+}
+/* Reduced data */
+@media (prefers-reduced-data:reduce){
+  #yt-box{opacity:.7}
+}
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Podsumowanie odcinka Huberman Lab (ep. 256) z dr Thaïs Aliabadi: endometrioza, PCOS, rak piersi, PMDD. Praktyczne informacje z odnośnikami do źródeł naukowych.">
@@ -437,4 +517,5 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem po 40. r.ż. mo
 <nav id='sn' aria-label='Nawigacja sekcji'><button id='sn-grip' class='btn-tip' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; panel nawigacji' aria-label='Przeci&#261;gnij panel'>&#8285;</button><button id='sn-top' class='btn-tip' data-tip='Przewi&#324; na g&oacute;r&#281; strony' aria-label='Do g&oacute;ry'>&#8593;</button><button id='sn-prev' class='btn-tip' data-tip='Poprzednia sekcja' aria-label='Poprzednia sekcja'>&#8249;</button><button id='sn-menu' class='btn-tip' data-tip='Lista wszystkich sekcji' aria-label='Menu sekcji'>&#9776;</button><button id='sn-next' class='btn-tip' data-tip='Nast&#281;pna sekcja' aria-label='Nast&#281;pna sekcja'>&#8250;</button><button id='sn-rst' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; panelu' aria-label='Resetuj pozycj&#281; panelu'>&#8634;</button><div id='sn-list' aria-hidden='true' role='menu'></div></nav>
 </div>
 <script src="player.js?v=508de88bb3"></script>
+<script src="ux.js?v=6c79fe37ff"></script>
 </body></html>
