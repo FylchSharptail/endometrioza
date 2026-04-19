@@ -273,21 +273,20 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #sn button{width:40px;height:40px;border-radius:50%;background:transparent;border:0;color:#d0d0d0;font-size:22px;cursor:pointer;display:grid;place-items:center;font-family:inherit;padding:0;line-height:1;flex-shrink:0;transition:background .15s,color .15s,opacity .28s}
 #sn button:hover{background:rgba(255,255,255,.1);color:#fff}
 #sn button.on{background:rgba(74,158,255,.25);color:#fff}
-/* Grip & reset are OUT of flex flow so showing/hiding them never shifts the pill's main buttons */
-#sn-grip,#sn-rst{position:absolute;top:50%;width:40px;height:40px;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .42s cubic-bezier(.22,1,.36,1)}
-#sn-grip{right:100%;transform:translate(12px,-50%) rotate(90deg);cursor:grab;font-size:18px}
+/* Grip & reset are IN flex flow with animated width: hover/open expands the pill */
+#sn-grip,#sn-rst{position:relative;top:auto;left:auto;right:auto;width:0;height:40px;opacity:0;pointer-events:none;overflow:hidden;padding:0;transform:none;flex-shrink:0;min-width:0;font-size:18px;transition:width .38s cubic-bezier(.22,1,.36,1),opacity .25s ease}
+#sn-grip{cursor:grab}
 #sn-grip:active{cursor:grabbing}
-#sn-rst{left:100%;transform:translate(-12px,-50%)}
 @media(hover:hover){
-  #sn:hover #sn-grip{opacity:.85;pointer-events:auto;transform:translate(-4px,-50%) rotate(90deg)}
-  #sn.moved:hover #sn-rst{opacity:.85;pointer-events:auto;transform:translate(4px,-50%)}
+  #sn:hover #sn-grip{width:40px;opacity:.85;pointer-events:auto}
+  #sn.moved:hover #sn-rst{width:40px;opacity:.85;pointer-events:auto}
 }
-#sn.open #sn-grip{opacity:.9;pointer-events:auto;transform:translate(-4px,-50%) rotate(90deg)}
-#sn.open.moved #sn-rst{opacity:.9;pointer-events:auto;transform:translate(4px,-50%)}
+#sn.open #sn-grip{width:40px;opacity:.9;pointer-events:auto}
+#sn.open.moved #sn-rst{width:40px;opacity:.9;pointer-events:auto}
 @media(hover:none){
   #sn{opacity:.92}
-  #sn #sn-grip{opacity:.75;pointer-events:auto;transform:translate(-4px,-50%) rotate(90deg)}
-  #sn.moved #sn-rst{opacity:.75;pointer-events:auto;transform:translate(4px,-50%)}
+  #sn #sn-grip{width:40px;opacity:.75;pointer-events:auto}
+  #sn.moved #sn-rst{width:40px;opacity:.75;pointer-events:auto}
 }
 /* Section list: drops BELOW the pill, centered; flips above when low on space */
 #sn-list{position:absolute;left:50%;top:calc(100% + 8px);width:260px;max-height:70vh;padding:6px;z-index:1049;background:rgba(18,18,22,.92);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);overflow-y:auto;opacity:0;pointer-events:none;transform:translateX(-50%) scale(.88);transform-origin:top center;transition:opacity var(--dur-fast) var(--ease),transform var(--dur) var(--ease-spring)}
@@ -301,7 +300,8 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 @media(max-width:1099px){
   #sn{padding:3px}
   #sn button{width:38px;height:38px;font-size:20px}
-  #sn-grip,#sn-rst{width:38px;height:38px}
+  #sn-grip,#sn-rst{height:38px}
+  #sn #sn-grip,#sn.moved #sn-rst{width:38px}
   #sn-list{width:220px;font-size:12px}
 }
 /* UX layer: resume, search, bookmarks, tools footer */
@@ -355,7 +355,7 @@ body.ux-reading #sn{opacity:.6}
 body.ux-reading #sn:hover,body.ux-reading #sn:focus-within{opacity:1}
 /* Print */
 @media print{
-  #sn,#yt-box,.skip-link,.ux-toast,.ux-overlay{display:none!important}
+  #sn,#yt-box,#ux-prog,.skip-link,.ux-toast,.ux-overlay{display:none!important}
   body{background:#fff!important;color:#000!important;font-size:11pt;line-height:1.55}
   .wrap{max-width:none;padding:0;margin:0}
   .hero{background:none!important;color:#000!important;padding:0 0 1rem;border-bottom:2px solid #000}
@@ -581,5 +581,5 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem po 40. r.ż. mo
 <nav id='sn' aria-label='Nawigacja sekcji'><button id='sn-grip' class='btn-tip' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; panel nawigacji' aria-label='Przeci&#261;gnij panel'>&#8285;</button><button id='sn-top' class='btn-tip' data-tip='Przewi&#324; na g&oacute;r&#281; strony' aria-label='Do g&oacute;ry'>&#8593;</button><button id='sn-prev' class='btn-tip' data-tip='Poprzednia sekcja' aria-label='Poprzednia sekcja'>&#8249;</button><button id='sn-menu' class='btn-tip' data-tip='Lista wszystkich sekcji' aria-label='Menu sekcji'>&#9776;</button><button id='sn-next' class='btn-tip' data-tip='Nast&#281;pna sekcja' aria-label='Nast&#281;pna sekcja'>&#8250;</button><button id='sn-rst' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; panelu' aria-label='Resetuj pozycj&#281; panelu'>&#8634;</button><div id='sn-list' aria-hidden='true' role='menu'></div></nav>
 </div>
 <script src="player.js?v=508de88bb3"></script>
-<script src="ux.js?v=6c79fe37ff"></script>
+<script src="ux.js?v=b4c8c5a1ec"></script>
 </body></html>
