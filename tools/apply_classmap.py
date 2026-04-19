@@ -29,13 +29,43 @@ def main():
     cm = json.loads(MAP_PATH.read_text())
     html = HTML_PATH.read_text()
 
+    # Fold-parent preprocessing: classmap entries with 'fold_into' contribute their
+    # utilities (prefixed by 'variant:') to the parent entry and are then skipped
+    # for DOM apply. CSS strip still targets the original fold selector.
+    # Classmap shape for a fold entry:
+    #   "#yt-box.audio": { "classes": "max-h-0 opacity-0",
+    #                      "fold_into": "#yt-box",
+    #                      "variant": "[&.audio]" }
+    selectors = list(args.selectors)
+    fold_skipped = set()
+    for sel in list(selectors):
+        entry = cm['selectors'].get(sel)
+        if not entry: continue
+        parent = entry.get('fold_into')
+        if not parent: continue
+        variant = entry.get('variant')
+        if not variant:
+            print(f'SKIP fold: {sel} has fold_into but no variant', file=sys.stderr); continue
+        if parent not in cm['selectors']:
+            print(f'SKIP fold: {sel} fold_into parent {parent} not in classmap', file=sys.stderr); continue
+        prefixed = ' '.join(f'{variant}:{u}' for u in entry['classes'].split())
+        pe = cm['selectors'][parent]
+        pe['classes'] = (pe.get('classes', '') + ' ' + prefixed).strip()
+        fold_skipped.add(sel)
+        if parent not in selectors:
+            selectors.append(parent)
+
     soup = BeautifulSoup(html, 'html.parser')
     summary = []
+    if fold_skipped:
+        summary.append(f'  folded {len(fold_skipped)} compound-state selector(s) into parents: {", ".join(sorted(fold_skipped))}')
     # For each touched element, collect (tag, original_class_attr_value_or_None, new_class_str)
     # then perform surgical regex replacement in the original HTML text to preserve formatting.
     touched = []  # list of dicts: {id, tag, old_class, new_class}
 
-    for sel in args.selectors:
+    for sel in selectors:
+        if sel in fold_skipped:
+            continue  # classes already merged into parent; CSS strip still targets sel
         if sel not in cm['selectors']:
             print(f'SKIP: {sel} not in classmap', file=sys.stderr); continue
         entry = cm['selectors'][sel]
@@ -90,7 +120,7 @@ def main():
     m = re.search(r'(<style\s+type="text/css"[^>]*>)(.+?)(</style>)', new_html, re.S)
     if m:
         css_body = m.group(2); style_start = m.start(2)
-        targets = set(args.selectors)
+        targets = set(selectors)
         new_css, removed_ct = strip_rules(css_body, targets)
         new_html = new_html[:style_start] + new_css + new_html[style_start + len(css_body):]
         summary.append(f'  stripped {removed_ct} CSS rules from <style>')
