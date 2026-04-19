@@ -161,28 +161,26 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #yt-rzl{left:0;bottom:0;width:18px;height:18px;cursor:nesw-resize;z-index:10}
 #yt-rztr{right:0;top:0;width:18px;height:18px;cursor:nesw-resize;z-index:12}
 #yt-rztl{left:0;top:0;width:18px;height:18px;cursor:nwse-resize;z-index:12}
-#yt-rn{top:0;left:18px;right:18px;height:6px;cursor:ns-resize;z-index:11}
-#yt-rs{bottom:0;left:18px;right:18px;height:6px;cursor:ns-resize;z-index:11}
-#yt-re{right:0;top:18px;bottom:18px;width:6px;cursor:ew-resize;z-index:11}
-#yt-rw{left:0;top:18px;bottom:18px;width:6px;cursor:ew-resize;z-index:11}
+#yt-rn{top:0;left:18px;right:18px;height:10px;cursor:ns-resize;z-index:13}
+#yt-rs{bottom:0;left:18px;right:18px;height:10px;cursor:ns-resize;z-index:13}
+#yt-re{right:0;top:18px;bottom:18px;width:10px;cursor:ew-resize;z-index:13}
+#yt-rw{left:0;top:18px;bottom:18px;width:10px;cursor:ew-resize;z-index:13}
 #yt-rz::after,#yt-rzl::after,#yt-rztr::after,#yt-rztl::after{content:'';position:absolute;width:10px;height:10px;border:0 solid #888}
 #yt-rz::after{right:3px;bottom:3px;border-right-width:2px;border-bottom-width:2px}
 #yt-rzl::after{left:3px;bottom:3px;border-left-width:2px;border-bottom-width:2px}
 #yt-rztr::after{right:3px;top:3px;border-right-width:2px;border-top-width:2px}
 #yt-rztl::after{left:3px;top:3px;border-left-width:2px;border-top-width:2px}
-/* Hover-only: hide handles on idle, show when hovered/dragged */
-@media(hover:hover){
-  .yt-rz{opacity:0}
-  #yt-box:hover .yt-rz,#yt-box.dragged .yt-rz{opacity:1}
-}
+/* Handles sync with bars auto-hide timer; always visible when dragged */
+.yt-rz{opacity:0;pointer-events:none;transition:opacity .25s ease}
+#yt-box.bars .yt-rz,#yt-box.dragged .yt-rz{opacity:1;pointer-events:auto}
 @media(hover:none){
-  .yt-rz{opacity:.35}
-  #yt-box.dragged .yt-rz{opacity:.8}
+  #yt-box.dragged .yt-rz{opacity:.85}
 }
 /* Mobile */
 @media(max-width:1099px){
-  #yt-box{position:fixed;bottom:0;left:0;right:0;top:auto;border-radius:10px 10px 0 0;width:auto;height:auto!important;max-height:60vh}
-  #yt-box.dragged{left:auto;right:auto;bottom:auto;border-radius:10px}
+  #yt-box{position:fixed;bottom:0;left:0;right:0;top:auto;border-radius:10px 10px 0 0;width:auto;max-height:60vh}
+  #yt-box:not(.dragged){height:auto!important}
+  #yt-box.dragged{left:auto;right:auto;bottom:auto;border-radius:10px;max-height:none}
 
   #yt-subs{display:none}
   /* On mobile show bars more permanently for touch discoverability */
