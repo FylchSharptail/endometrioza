@@ -198,27 +198,27 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 .tip-portal.top::before{top:100%;border-top-color:#1c1f26}
 .tip-portal.left::before{left:100%;top:50%;margin-left:0;margin-top:-6px;border-color:transparent;border-left-color:#1c1f26}
 /* ========== NAV PILL (horizontal, top-centered) ========== */
-#sn{position:fixed;top:10px;left:50%;transform:translateX(-50%);display:flex;flex-direction:row;align-items:center;padding:4px;gap:0;z-index:1050;opacity:.75;overflow:visible;background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:26px;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:opacity .25s ease,background .25s ease}
+#sn{position:fixed;top:5px;left:50%;transform:translateX(-50%);display:flex;flex-direction:row;align-items:center;padding:4px;gap:0;z-index:1050;opacity:.75;overflow:visible;background:rgba(18,18,22,.78);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:26px;box-shadow:0 4px 18px rgba(0,0,0,.3);transition:opacity .25s ease,background .25s ease}
 #sn.moved{transform:none}
 #sn:hover,#sn.open{opacity:1}
-#sn button{width:40px;height:40px;border-radius:50%;background:transparent;border:0;color:#d0d0d0;font-size:22px;cursor:pointer;display:grid;place-items:center;font-family:inherit;padding:0;line-height:1;flex-shrink:0;transition:background .15s,color .15s,max-width .42s cubic-bezier(.22,1,.36,1),opacity .28s,margin .42s cubic-bezier(.22,1,.36,1)}
+#sn button{width:40px;height:40px;border-radius:50%;background:transparent;border:0;color:#d0d0d0;font-size:22px;cursor:pointer;display:grid;place-items:center;font-family:inherit;padding:0;line-height:1;flex-shrink:0;transition:background .15s,color .15s,opacity .28s}
 #sn button:hover{background:rgba(255,255,255,.1);color:#fff}
 #sn button.on{background:rgba(74,158,255,.25);color:#fff}
-#sn-grip,#sn-rst{max-width:0;opacity:0;overflow:hidden;pointer-events:none;margin:0;padding:0}
-#sn-grip{cursor:grab;font-size:18px;transform:rotate(90deg)}
+/* Grip & reset are OUT of flex flow so showing/hiding them never shifts the pill's main buttons */
+#sn-grip,#sn-rst{position:absolute;top:50%;width:40px;height:40px;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .42s cubic-bezier(.22,1,.36,1)}
+#sn-grip{right:100%;transform:translate(12px,-50%) rotate(90deg);cursor:grab;font-size:18px}
 #sn-grip:active{cursor:grabbing}
-/* Hover-capable devices: reveal grip on pill hover, rst when moved+hover */
+#sn-rst{left:100%;transform:translate(-12px,-50%)}
 @media(hover:hover){
-  #sn:hover #sn-grip{max-width:40px;opacity:.85;pointer-events:auto}
-  #sn.moved:hover #sn-rst{max-width:40px;opacity:.85;pointer-events:auto}
+  #sn:hover #sn-grip{opacity:.85;pointer-events:auto;transform:translate(-4px,-50%) rotate(90deg)}
+  #sn.moved:hover #sn-rst{opacity:.85;pointer-events:auto;transform:translate(4px,-50%)}
 }
-/* Touch / open state: always reveal grip */
-#sn.open #sn-grip{max-width:40px;opacity:.9;pointer-events:auto}
-#sn.open.moved #sn-rst{max-width:40px;opacity:.9;pointer-events:auto}
+#sn.open #sn-grip{opacity:.9;pointer-events:auto;transform:translate(-4px,-50%) rotate(90deg)}
+#sn.open.moved #sn-rst{opacity:.9;pointer-events:auto;transform:translate(4px,-50%)}
 @media(hover:none){
   #sn{opacity:.92}
-  #sn #sn-grip{max-width:40px;opacity:.75;pointer-events:auto}
-  #sn.moved #sn-rst{max-width:40px;opacity:.75;pointer-events:auto}
+  #sn #sn-grip{opacity:.75;pointer-events:auto;transform:translate(-4px,-50%) rotate(90deg)}
+  #sn.moved #sn-rst{opacity:.75;pointer-events:auto;transform:translate(4px,-50%)}
 }
 /* Section list: drops BELOW the pill, centered; flips above when low on space */
 #sn-list{position:absolute;left:50%;top:calc(100% + 8px);width:260px;max-height:70vh;padding:6px;z-index:1049;background:rgba(18,18,22,.92);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);overflow-y:auto;opacity:0;pointer-events:none;transform:translateX(-50%) scale(.88);transform-origin:top center;transition:opacity var(--dur-fast) var(--ease),transform var(--dur) var(--ease-spring)}
@@ -232,7 +232,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 @media(max-width:1099px){
   #sn{padding:3px}
   #sn button{width:38px;height:38px;font-size:20px}
-  #sn.open #sn-grip,#sn.open.moved #sn-rst,#sn:hover #sn-grip,#sn.moved:hover #sn-rst{max-width:38px}
+  #sn-grip,#sn-rst{width:38px;height:38px}
   #sn-list{width:220px;font-size:12px}
 }
 </style>
