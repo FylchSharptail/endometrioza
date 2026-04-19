@@ -220,7 +220,26 @@ document.addEventListener('keydown',function(e){
   else if(k==='?'){showKeys()}
 });
 
-function init(){buildMenu();if(S.reading)document.body.classList.add('ux-reading');applyHash()}
+function mountProgress(){
+  if(document.getElementById('ux-prog'))return;
+  var p=document.createElement('div');p.id='ux-prog';p.setAttribute('aria-hidden','true');
+  p.style.cssText='position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#1b3a5c,#4a9eff);z-index:1060;pointer-events:none;will-change:width;transition:width .08s linear';
+  document.body.appendChild(p);
+  var ticking=false;
+  function update(){
+    var h=document.documentElement,b=document.body;
+    var st=h.scrollTop||b.scrollTop;
+    var sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+    var pct=sh>0?Math.max(0,Math.min(100,(st/sh)*100)):0;
+    p.style.width=pct+'%';
+    ticking=false;
+  }
+  function onScroll(){if(!ticking){requestAnimationFrame(update);ticking=true}}
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll,{passive:true});
+  update();
+}
+function init(){buildMenu();if(S.reading)document.body.classList.add('ux-reading');applyHash();mountProgress()}
 if(document.readyState==='complete'||document.readyState==='interactive')setTimeout(init,100);
 else document.addEventListener('DOMContentLoaded',function(){setTimeout(init,100)});
 window.addEventListener('hashchange',applyHash);
