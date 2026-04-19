@@ -88,7 +88,7 @@ def main():
     if m:
         css_body = m.group(2); style_start = m.start(2)
         targets = set(args.selectors)
-        new_css, removed_ct = strip_rules(css_body, targets, fold_parent=True)
+        new_css, removed_ct = strip_rules(css_body, targets)
         new_html = new_html[:style_start] + new_css + new_html[style_start + len(css_body):]
         summary.append(f'  stripped {removed_ct} CSS rules from <style>')
 
@@ -113,62 +113,62 @@ def classify_base(sel):
         base += m2.group(1); rest = rest[m2.end():]
     return base
 
-def strip_rules(css, targets, fold_parent=False):
-    compound_re = re.compile(r"^(#[\w-]+|\.[\w-]+|[a-zA-Z][\w-]*)((?:\.[\w-]+|:not\([^)]+\)|\[[^\]]+\])+)$")
-    def _match(sel):
-        b = classify_base(sel)
-        if b in targets: return True
-        if fold_parent:
-            trimmed = b
-            while True:
-                m = compound_re.match(trimmed)
-                if not m: break
-                trimmed = m.group(1)
-                if trimmed in targets: return True
-        return False
+def strip_rules(css, targets):
+    """Surgical CSS rule strip: walk char-by-char, remove top-level rules whose ALL
+    comma-separated selectors classify to a target base. Preserves original whitespace
+    and comments elsewhere. Skips @media blocks (left as-is for later cleanup)."""
     out = []; i = 0; n = len(css); removed = 0
     while i < n:
         ch = css[i]
-        if css[i:i+2] == "/*":
-            j = css.find("*/", i+2); j = n if j < 0 else j + 2
+        # pass through comments
+        if css[i:i+2] == '/*':
+            j = css.find('*/', i+2); j = n if j < 0 else j + 2
             out.append(css[i:j]); i = j; continue
-        if ch == "@":
+        # at-rules: pass entire block through untouched
+        if ch == '@':
+            # find selector/prelude end at either ; or { matching
             j = i
-            while j < n and css[j] not in ";{": j += 1
-            if j < n and css[j] == ";":
+            while j < n and css[j] not in ';{': j += 1
+            if j < n and css[j] == ';':
                 out.append(css[i:j+1]); i = j+1; continue
+            # brace block: find matching close
             depth = 0; k = j
             while k < n:
-                if css[k] == "{": depth += 1
-                elif css[k] == "}":
+                if css[k] == '{': depth += 1
+                elif css[k] == '}':
                     depth -= 1
                     if depth == 0: k += 1; break
                 k += 1
             out.append(css[i:k]); i = k; continue
+        # whitespace
         if ch.isspace():
             out.append(ch); i += 1; continue
+        # regular rule: capture selector up to '{'
         sel_start = i
-        while i < n and css[i] != "{":
-            if css[i:i+2] == "/*":
-                j = css.find("*/", i+2); i = n if j < 0 else j + 2; continue
+        while i < n and css[i] != '{':
+            if css[i:i+2] == '/*':
+                j = css.find('*/', i+2); i = n if j < 0 else j + 2; continue
             i += 1
         if i >= n: out.append(css[sel_start:]); break
         sel_text = css[sel_start:i]
+        brace_start = i
         depth = 1; i += 1
         while i < n and depth > 0:
-            if css[i] == "{": depth += 1
-            elif css[i] == "}": depth -= 1
+            if css[i] == '{': depth += 1
+            elif css[i] == '}': depth -= 1
             i += 1
-        rule_end = i
-        sels = [x.strip() for x in sel_text.split(",") if x.strip()]
-        all_target = sels and all(_match(s) for s in sels)
+        rule_end = i  # position after closing }
+        # classify: all selectors must be targets to strip
+        sels = [s.strip() for s in sel_text.split(',') if s.strip()]
+        all_target = sels and all(classify_base(s) in targets for s in sels)
         if all_target:
-            if rule_end < n and css[rule_end] == "\n": rule_end += 1
+            # also swallow trailing newline if present to avoid leaving blank lines
+            if rule_end < n and css[rule_end] == '\n': rule_end += 1
             removed += 1
         else:
             out.append(css[sel_start:rule_end])
         i = rule_end
-    return "".join(out), removed
+    return ''.join(out), removed
 
 if __name__ == '__main__':
     main()
