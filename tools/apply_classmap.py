@@ -83,8 +83,11 @@ def main():
         new_html = new_html[:m.start()] + repl(m) + new_html[m.end():]
         cursor = m.start() + len(repl(m))
 
-    # Strip CSS rules for processed selectors (surgical text walk)
-    m = re.search(r'(<style[^>]*>)(.+?)(</style>)', new_html, re.S)
+    # Strip CSS rules for processed selectors (surgical text walk).
+    # Anchor to the real stylesheet (<style type="text/css">) — a bare <style[^>]*>
+    # regex first-matches the literal "<style>" inside the HTML-comment banner
+    # and then swallows everything up to </style>, including <script> blocks.
+    m = re.search(r'(<style\s+type="text/css"[^>]*>)(.+?)(</style>)', new_html, re.S)
     if m:
         css_body = m.group(2); style_start = m.start(2)
         targets = set(args.selectors)
