@@ -77,6 +77,8 @@ body { font-size:13px; }
 sup.ref { font-size:0.68em; vertical-align:super; margin-left:1px; }
 sup.ref a { color:var(--accent); text-decoration:none; border-bottom:0; }
 sup.ref a:hover { text-decoration:underline; }
+:root{--ease:cubic-bezier(.22,.9,.3,1);--ease-spring:cubic-bezier(.34,1.3,.64,1);--dur-fast:180ms;--dur:320ms;--dur-slow:450ms}
+.no-tr,.no-tr *{transition:none!important}
 .skip-link{position:absolute;left:-9999px;top:1rem;z-index:1000;background:#fff;color:#1b3a5c;padding:0.75rem 1rem;border:2px solid #1b3a5c;border-radius:10px;font-size:0.9rem;}
 .skip-link:focus{left:1rem;}
 a:focus-visible{outline:3px solid #1b3a5c;outline-offset:3px;border-radius:4px;}
@@ -84,18 +86,21 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 
 .layout{max-width:1340px;margin:0 auto}
 @media(min-width:1100px){.layout{display:grid;grid-template-columns:1fr 340px;gap:2rem;padding:0 2rem}.wrap{max-width:none;margin:0;padding-left:0;padding-right:0}}
-.ts{font-size:.72em;color:var(--accent);text-decoration:none;padding:.1em .35em;border-radius:3px;background:var(--accent-light);white-space:nowrap;cursor:pointer;margin-left:.3em;font-variant-numeric:tabular-nums;vertical-align:middle}
+.ts{font-size:.72em;color:var(--accent);text-decoration:none;padding:.1em .45em .1em .3em;border-radius:3px;background:var(--accent-light);white-space:nowrap;cursor:pointer;margin-left:.3em;font-variant-numeric:tabular-nums;vertical-align:middle;display:inline-flex;align-items:center;gap:.25em;transition:background .15s ease,transform .15s ease}
+.ts::before{content:'\25B8';font-size:.95em;opacity:.65;line-height:1;transition:transform .2s var(--ease-spring,cubic-bezier(.34,1.3,.64,1)),opacity .15s ease}
 .ts:hover,.ts:focus-visible{background:rgba(27,58,92,.2);outline:2px solid var(--accent);outline-offset:1px}
+.ts:hover::before,.ts:focus-visible::before{opacity:1;transform:translateX(1px) scale(1.15)}
 
 /* ========== PLAYER ========== */
 #yt-box{display:flex;flex-direction:column;overflow:hidden;background:#000;min-width:200px;z-index:1000;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.4);position:relative}
 @media(min-width:1100px){#yt-box{position:sticky;top:1rem}}
 #yt-box.dragged{position:fixed!important;box-shadow:0 10px 40px rgba(0,0,0,.65);top:auto;bottom:auto}
+#yt-box.hiding{transition:transform .5s var(--ease),opacity .4s var(--ease);transform-origin:100% 0%;pointer-events:none}
 #yt-box.hidden{display:none}
-.yt-vid-wrap{display:flex;flex:1 1 auto;min-height:0;overflow:hidden;max-height:1000px;opacity:1;transform:scaleY(1);transform-origin:top;transition:max-height .4s cubic-bezier(.22,1,.36,1),opacity .3s ease,transform .4s cubic-bezier(.22,1,.36,1)}
-#yt-box iframe{width:100%;aspect-ratio:16/9;border:0;display:block;background:#000;flex:1 1 auto;min-height:0}
-#yt-box.audio .yt-vid-wrap{max-height:0;opacity:0;transform:scaleY(.85)}
-#yt-box.anim{transition:height .45s cubic-bezier(.22,1,.36,1)}
+.yt-vid-wrap{display:flex;flex:1 1 auto;min-height:0;overflow:hidden;aspect-ratio:16/9;max-height:1000px;opacity:1;transition:max-height var(--dur) var(--ease),opacity var(--dur-fast) var(--ease)}
+#yt-box iframe{width:100%;height:100%;border:0;display:block;background:#000;flex:1 1 auto;min-height:0}
+#yt-box.audio .yt-vid-wrap{max-height:0;opacity:0}
+#yt-box.anim{transition:height var(--dur) var(--ease),transform var(--dur) var(--ease)}
 /* Bars: in-flow drawers, height 0 -> explicit */
 .yt-bar{height:0;opacity:0;overflow:hidden;flex-shrink:0;transition:height .3s cubic-bezier(.22,1,.36,1),opacity .2s ease-out;position:relative;background:#141414}
 #yt-box.bars .yt-bar{opacity:1}
@@ -110,22 +115,22 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #yt-hide{position:absolute;right:4px;top:2px;width:24px;height:24px;border:0;background:transparent;color:#c6c6c6;border-radius:4px;cursor:pointer;font-size:13px;line-height:1;display:grid;place-items:center;font-family:inherit;z-index:2}
 #yt-hide:hover{background:#2a2a2a;color:#fff}
 /* Reset fades in when dragged */
-#yt-reset{opacity:0;pointer-events:none;transform:scale(.8);transition:opacity .3s ease,transform .3s cubic-bezier(.22,1.3,.36,1)}
+#yt-reset{opacity:0;pointer-events:none;transform:scale(.8);transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease-spring)}
 #yt-box.dragged #yt-reset{opacity:1;pointer-events:auto;transform:scale(1)}
 /* Content area */
-#yt-content{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:#000}
-#yt-subs{background:rgba(0,0,0,.85);color:#eee;font-size:13px;line-height:1.4;padding:6px 10px;min-height:24px;max-height:120px;overflow:hidden;flex-shrink:0;transition:max-height .4s,padding .4s,opacity .3s}
+#yt-content{position:relative;display:flex;flex-direction:column;flex:1 1 auto;min-width:0;min-height:0;overflow:hidden;background:#000}
+#yt-subs{background:rgba(0,0,0,.85);color:#eee;font-size:13px;line-height:1.4;padding:6px 10px;min-height:24px;max-height:120px;overflow:hidden;flex-shrink:0;transition:max-height var(--dur) var(--ease),padding var(--dur) var(--ease),opacity var(--dur-fast) var(--ease)}
 #yt-subs:empty::before{content:attr(data-ph);color:#666;font-style:italic}
 #yt-subs.fade{max-height:0;min-height:0;padding-top:0;padding-bottom:0;opacity:0}
 /* Audio mode: iframe wrap collapses (iframe keeps playing audio), subs hide, box content-sized */
-#yt-box.audio{min-height:0!important}
-#yt-box:not(.anim).audio{height:auto!important}
+#yt-box.audio{min-height:0}
+#yt-box.audio:not(.dragged){height:auto}
 #yt-box.audio #yt-subs{max-height:0;min-height:0;padding-top:0;padding-bottom:0;opacity:0;border:0}
 /* Audio controls */
-#yt-audio-ctrl{display:block;padding:12px 14px 14px;background:#0a0a0a;color:#eee;flex-shrink:0;min-height:96px;transition:padding .35s cubic-bezier(.22,1,.36,1),min-height .35s cubic-bezier(.22,1,.36,1)}
-#yt-box:not(.audio) #yt-audio-ctrl{padding:6px 12px 8px;min-height:0}
-.ac-title{font-size:12px;font-weight:600;color:#9cf;margin-bottom:10px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.01em;max-height:26px;opacity:1;transform:translateY(0);transition:max-height .35s cubic-bezier(.22,1,.36,1),opacity .25s ease,transform .3s cubic-bezier(.22,1.3,.36,1),margin-bottom .35s}
-#yt-box:not(.audio) .ac-title{max-height:0;opacity:0;margin-bottom:0;transform:translateY(-6px);pointer-events:none}
+#yt-audio-ctrl{display:block;padding:8px 14px 10px;background:#0a0a0a;color:#eee;flex-shrink:0;margin-top:auto;transition:padding var(--dur) var(--ease)}
+#yt-box.audio #yt-audio-ctrl{padding:12px 14px 14px}
+.ac-title{font-size:12px;font-weight:600;color:#9cf;margin-bottom:10px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.01em;max-height:26px;opacity:1;transform:translateY(0);transition:max-height var(--dur) var(--ease),opacity var(--dur-fast) var(--ease),transform var(--dur) var(--ease),margin-bottom var(--dur) var(--ease)}
+#yt-box:not(.audio) .ac-title{max-height:0;opacity:0;margin-bottom:0;transform:translateY(-4px);pointer-events:none}
 .ac-time{display:flex;align-items:center;gap:8px;font-size:10px;color:#888;margin-bottom:8px;font-variant-numeric:tabular-nums}
 .ac-prog{flex:1;height:4px;background:#2a2a2a;border-radius:2px;cursor:pointer;position:relative;overflow:hidden}
 .ac-prog:hover{height:6px;margin-top:-1px}
@@ -138,9 +143,12 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 #ac-play{font-size:16px;background:#1b3a5c;color:#fff;width:40px;height:40px}
 #ac-play:hover{background:#2b5280;color:#fff}
 /* Show-video floating button (when hidden) */
-#yt-show{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;background:#1b3a5c;color:#fff;border:0;font-size:16px;font-weight:700;cursor:pointer;display:none;z-index:1100;box-shadow:0 4px 14px rgba(0,0,0,.35);font-family:inherit;padding-left:3px}
-#yt-show:hover{background:#274d72}
-#yt-show.on{display:grid;place-items:center}
+#yt-show{position:fixed;top:14px;right:14px;width:44px;height:44px;border-radius:50%;background:#1b3a5c;color:#fff;border:0;font-size:16px;font-weight:700;cursor:pointer;display:none;z-index:1100;box-shadow:0 4px 14px rgba(0,0,0,.35);font-family:inherit;padding-left:3px;transition:background .15s ease,transform .2s var(--ease-spring)}
+#yt-show:hover{background:#274d72;transform:scale(1.06)}
+#yt-show.on{display:grid;place-items:center;animation:ytShowIn .45s var(--ease-spring) both}
+#yt-show.pulse::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid #4a9eff;opacity:0;animation:ytShowPulse 1.4s ease-out infinite}
+@keyframes ytShowIn{from{transform:scale(.3) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes ytShowPulse{0%{transform:scale(.9);opacity:.75}100%{transform:scale(1.6);opacity:0}}
 /* Resize handles */
 .yt-rz{position:absolute;touch-action:none;transition:opacity .2s}
 #yt-rz{right:0;bottom:0;width:18px;height:18px;cursor:nwse-resize;z-index:10}
@@ -179,7 +187,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
 .btn-tip::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at center,rgba(74,158,255,.55),rgba(74,158,255,.18) 60%,rgba(74,158,255,0) 100%);transform:scale(0);transform-origin:center;pointer-events:none;opacity:0;z-index:-1;will-change:transform,opacity}
 .btn-tip.ripping::before{animation:tipRipple .5s cubic-bezier(.22,.9,.3,1) forwards}
 @keyframes tipRipple{0%{transform:scale(0);opacity:0}12%{opacity:1}100%{transform:scale(1.15);opacity:.9}}
-.tip-portal{position:fixed;background:#1c1f26;color:#fff;padding:8px 12px;border-radius:7px;font-size:11.5px;max-width:260px;line-height:1.4;opacity:0;pointer-events:none;transition:opacity .18s,transform .22s cubic-bezier(.22,1.5,.36,1);z-index:2000;font-weight:500;box-shadow:0 6px 20px rgba(0,0,0,.55);text-align:center;border:1px solid #2a2f3a;transform:scale(.82);transform-origin:center}
+.tip-portal{position:fixed;background:#1c1f26;color:#fff;padding:8px 12px;border-radius:7px;font-size:11.5px;max-width:260px;line-height:1.4;opacity:0;pointer-events:none;transition:opacity var(--dur-fast) var(--ease),transform var(--dur) var(--ease-spring);z-index:2000;font-weight:500;box-shadow:0 6px 20px rgba(0,0,0,.55);text-align:center;border:1px solid #2a2f3a;transform:scale(.82);transform-origin:center}
 .tip-portal.show{opacity:1;transform:scale(1)}
 .tip-portal.top{transform-origin:center bottom}
 .tip-portal.bottom{transform-origin:center top}
@@ -212,7 +220,7 @@ nav.toc a:focus-visible,sup.ref a:focus-visible{background:#e6edf5;}
   #sn.moved #sn-rst{max-height:40px;opacity:.75;pointer-events:auto}
 }
 /* Section list: CSS-only positioning, anchored to pill via position:absolute */
-#sn-list{position:absolute;width:240px;max-height:70vh;padding:6px;z-index:1049;background:rgba(18,18,22,.92);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);overflow-y:auto;opacity:0;pointer-events:none;top:50%;transform:translateY(-50%) scale(.88);transition:opacity .18s,transform .28s cubic-bezier(.22,1.3,.36,1)}
+#sn-list{position:absolute;width:240px;max-height:70vh;padding:6px;z-index:1049;background:rgba(18,18,22,.92);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.45);overflow-y:auto;opacity:0;pointer-events:none;top:50%;transform:translateY(-50%) scale(.88);transition:opacity var(--dur-fast) var(--ease),transform var(--dur) var(--ease-spring)}
 /* Default: menu sits to the LEFT of the pill (pill usually lives on right edge) */
 #sn-list,#sn-list.on-left{right:calc(100% + 10px);left:auto;transform-origin:right center}
 /* When pill is on the left half of the viewport, flip menu to the RIGHT */
@@ -421,9 +429,9 @@ Nagłe pojawienie się objawów afektywnych związanych z cyklem może wskazywa�
 </div>
 <footer>Opracowanie na podstawie odcinka Huberman Lab z 24 listopada 2025 · Gość: Dr Thaïs Aliabadi, MD</footer>
 </main>
-<aside id='yt-col' aria-label='Odtwarzacz wideo'><div id='yt-box'><div id='yt-bar-top' class='yt-bar'><div id='yt-drag' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; odtwarzacz w dowolne miejsce strony' aria-label='Przeci&#261;gnij'></div><button id='yt-hide' class='btn-tip' data-tip='Ukryj odtwarzacz wideo (w prawym g&oacute;rnym rogu pojawi si&#281; przycisk, aby go przywr&oacute;ci&#263;)' aria-label='Ukryj wideo'>&#10005;</button></div><div id='yt-content'><div class='yt-vid-wrap'><iframe id='yt-player' src='https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;cc_lang_pref=pl&amp;cc_load_policy=1&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;iv_load_policy=3&amp;origin=https://fylchsharptail.github.io' title='Huberman Lab ep. 256' allow='autoplay; encrypted-media' allowfullscreen></iframe></div><div id='yt-subs' data-ph='Kliknij znacznik czasu lub odtw&oacute;rz wideo&hellip;'></div><div id='yt-audio-ctrl'><div class='ac-title'>&mdash;</div><div class='ac-time'><span class='ac-cur'>0:00</span><div class='ac-prog' title='Kliknij, aby przewin&#261;&#263;'><div class='ac-bar'></div></div><span class='ac-dur'>&mdash;</span></div><div class='ac-btns'><button id='yt-reset' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; i rozmiar odtwarzacza' aria-label='Resetuj pozycj&#281;'>&#8634;</button><button id='ac-prev' class='btn-tip' data-tip='Przejd&#378; do pocz&#261;tku poprzedniego rozdzia&#322;u' aria-label='Poprzedni rozdzia&#322;'>&#9198;</button><button id='ac-play' class='btn-tip' data-tip='Odtw&oacute;rz lub zatrzymaj wideo' aria-label='Odtw&oacute;rz / Pauza'>&#9654;</button><button id='ac-next' class='btn-tip' data-tip='Przejd&#378; do nast&#281;pnego rozdzia&#322;u' aria-label='Nast&#281;pny rozdzia&#322;'>&#9197;</button><button id='yt-audio' class='btn-tip' data-tip='Prze&#322;&#261;cz na tryb tylko-d&#378;wi&#281;k (ukrywa obraz, zostawia odtwarzacz audio z rozdzia&#322;ami)' aria-label='Tryb audio'><span class='ico'>&#9834;</span></button></div></div></div><div id='yt-rz' class='yt-rz'></div><div id='yt-rzl' class='yt-rz'></div><div id='yt-rztr' class='yt-rz'></div><div id='yt-rztl' class='yt-rz'></div><div id='yt-rn' class='yt-rz'></div><div id='yt-rs' class='yt-rz'></div><div id='yt-re' class='yt-rz'></div><div id='yt-rw' class='yt-rz'></div></div></aside>
-<button id='yt-show' title='Poka&zacute; wideo' aria-label='Poka&zacute; wideo'>&#9654;</button>
+<aside id='yt-col' aria-label='Odtwarzacz wideo'><div id='yt-box'><div id='yt-bar-top' class='yt-bar'><div id='yt-drag' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; odtwarzacz w dowolne miejsce strony' aria-label='Przeci&#261;gnij'></div><button id='yt-hide' class='btn-tip' data-tip='Ukryj odtwarzacz wideo (w prawym g&oacute;rnym rogu pojawi si&#281; przycisk, aby go przywr&oacute;ci&#263;)' aria-label='Ukryj wideo'>&#10005;</button></div><div id='yt-content'><div class='yt-vid-wrap'><iframe id='yt-player' src='https://www.youtube.com/embed/hMzfGZnaPN8?enablejsapi=1&amp;cc_lang_pref=pl&amp;cc_load_policy=1&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;iv_load_policy=3&amp;origin=https://fylchsharptail.github.io' title='Huberman Lab ep. 256' allow='autoplay; encrypted-media' allowfullscreen></iframe></div><div id='yt-subs' data-ph='Kliknij znacznik czasu lub odtw&oacute;rz wideo&hellip;'></div><div id='yt-audio-ctrl'><div class='ac-title'>&mdash;</div><div class='ac-time'><span class='ac-cur'>0:00</span><div class='ac-prog' title='Kliknij, aby przewin&#261;&#263;'><div class='ac-bar'></div></div><span class='ac-dur'>&mdash;</span></div><div class='ac-btns'><button id='yt-reset' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; i rozmiar odtwarzacza' aria-label='Resetuj pozycj&#281;'>&#8634;</button><button id='ac-back10' class='btn-tip ac-seek' data-tip='Cofnij 10 sekund' aria-label='Cofnij 10 sekund'>&#8630;10</button><button id='ac-prev' class='btn-tip' data-tip='Przejd&#378; do pocz&#261;tku poprzedniego rozdzia&#322;u' aria-label='Poprzedni rozdzia&#322;'>&#9198;</button><button id='ac-play' class='btn-tip' data-tip='Odtw&oacute;rz lub zatrzymaj wideo' aria-label='Odtw&oacute;rz / Pauza'>&#9654;</button><button id='ac-next' class='btn-tip' data-tip='Przejd&#378; do nast&#281;pnego rozdzia&#322;u' aria-label='Nast&#281;pny rozdzia&#322;'>&#9197;</button><button id='ac-fwd10' class='btn-tip ac-seek' data-tip='Przewi&#324; 10 sekund do przodu' aria-label='Przewi&#324; 10 sekund'>10&#8631;</button><button id='yt-audio' class='btn-tip' data-tip='Prze&#322;&#261;cz na tryb tylko-d&#378;wi&#281;k (ukrywa obraz, zostawia odtwarzacz audio z rozdzia&#322;ami)' aria-label='Tryb audio'><span class='ico'>&#9834;</span></button></div></div></div><div id='yt-rz' class='yt-rz'></div><div id='yt-rzl' class='yt-rz'></div><div id='yt-rztr' class='yt-rz'></div><div id='yt-rztl' class='yt-rz'></div><div id='yt-rn' class='yt-rz'></div><div id='yt-rs' class='yt-rz'></div><div id='yt-re' class='yt-rz'></div><div id='yt-rw' class='yt-rz'></div></div></aside>
+<button id='yt-show' class='btn-tip' data-tip='Kliknij tutaj, aby przywr&oacute;ci&#263; odtwarzacz' title='Poka&zacute; wideo' aria-label='Poka&zacute; wideo'>&#9654;</button>
 <nav id='sn' aria-label='Nawigacja sekcji'><button id='sn-grip' class='btn-tip' data-tip='Przeci&#261;gnij, aby przenie&#347;&#263; panel nawigacji' aria-label='Przeci&#261;gnij panel'>&#8285;</button><button id='sn-top' class='btn-tip' data-tip='Przewi&#324; na g&oacute;r&#281; strony' aria-label='Do g&oacute;ry'>&#8593;</button><button id='sn-prev' class='btn-tip' data-tip='Poprzednia sekcja' aria-label='Poprzednia sekcja'>&#8249;</button><button id='sn-menu' class='btn-tip' data-tip='Lista wszystkich sekcji' aria-label='Menu sekcji'>&#9776;</button><button id='sn-next' class='btn-tip' data-tip='Nast&#281;pna sekcja' aria-label='Nast&#281;pna sekcja'>&#8250;</button><button id='sn-rst' class='btn-tip' data-tip='Przywr&oacute;&#263; domy&#347;ln&#261; pozycj&#281; panelu' aria-label='Resetuj pozycj&#281; panelu'>&#8634;</button><div id='sn-list' aria-hidden='true' role='menu'></div></nav>
 </div>
-<script src="player.js?v=e54026eb81"></script>
+<script src="player.js?v=e033e02fe2"></script>
 </body></html>

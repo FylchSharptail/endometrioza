@@ -19,6 +19,9 @@ fr.addEventListener('load',function(){fr.contentWindow.postMessage(JSON.stringif
 if(acPlay)acPlay.addEventListener('click',function(e){e.stopPropagation();cmd(playing?'pauseVideo':'playVideo')});
 if(acPrev)acPrev.addEventListener('click',function(e){e.stopPropagation();var i=getIdx(curT-2);i=Math.max(0,i-1);cmd('seekTo',[C[i][0],!0]);cmd('playVideo')});
 if(acNext)acNext.addEventListener('click',function(e){e.stopPropagation();var i=getIdx(curT);i=Math.min(C.length-1,i+1);cmd('seekTo',[C[i][0],!0]);cmd('playVideo')});
+var acBack10=document.getElementById('ac-back10'),acFwd10=document.getElementById('ac-fwd10');
+if(acBack10)acBack10.addEventListener('click',function(e){e.stopPropagation();cmd('seekTo',[Math.max(0,curT-10),!0])});
+if(acFwd10)acFwd10.addEventListener('click',function(e){e.stopPropagation();cmd('seekTo',[(dur?Math.min(dur,curT+10):curT+10),!0])});
 function updChapTips(){var i=getIdx(curT);var p=Math.max(0,i-1),n=Math.min(C.length-1,i+1);if(acPrev)acPrev.setAttribute('data-tip','Poprzedni rozdzia\u0142: '+C[p][1]);if(acNext)acNext.setAttribute('data-tip','Nast\u0119pny rozdzia\u0142: '+C[n][1])}
 updChapTips();
 if(acProg)acProg.addEventListener('click',function(e){if(!dur)return;var r=acProg.getBoundingClientRect();var p=(e.clientX-r.left)/r.width;cmd('seekTo',[p*dur,!0])});
@@ -46,13 +49,75 @@ function rtlmove(e){if(!rstl)return;e.preventDefault();var p=gxy(e);var dx=p.x-r
 function rtlend(){if(!rstl)return;rstl=null;fr.style.pointerEvents=''}
 function reset(){box.classList.remove('dragged');box.style.left='';box.style.top='';box.style.width='';box.style.height=''}
 var hideBtn=document.getElementById('yt-hide'),showBtn=document.getElementById('yt-show');
-function hide(){box.classList.add('hidden');showBtn.classList.add('on')}
-function show(){box.classList.remove('hidden');showBtn.classList.remove('on');showBars()}
+function hide(){
+  var br=box.getBoundingClientRect();
+  var sr=showBtn.getBoundingClientRect();
+  var tx,ty;
+  if(sr.width){tx=(sr.left+sr.width/2)-(br.left+br.width/2);ty=(sr.top+sr.height/2)-(br.top+br.height/2)}
+  else{tx=innerWidth-36-(br.left+br.width/2);ty=36-(br.top+br.height/2)}
+  clearTimeout(box._hideT);clearTimeout(showBtn._tipT);
+  box.classList.add('hiding');
+  requestAnimationFrame(function(){box.style.transform='translate('+tx+'px,'+ty+'px) scale(.08)';box.style.opacity='0'});
+  box._hideT=setTimeout(function(){
+    box.classList.add('hidden');box.classList.remove('hiding');
+    box.style.transform='';box.style.opacity='';
+    showBtn.classList.add('on');
+    requestAnimationFrame(function(){showBtn.classList.add('pulse');showTip(showBtn)});
+    showBtn._tipT=setTimeout(function(){hideTip();showBtn.classList.remove('pulse')},3000);
+  },500);
+}
+function show(){clearTimeout(showBtn._tipT);hideTip();showBtn.classList.remove('on','pulse');box.classList.remove('hidden','hiding');box.style.transform='';box.style.opacity='';showBars()}
 hideBtn.addEventListener('click',function(e){e.stopPropagation();hide()});
 showBtn.addEventListener('click',show);
 var audioBtn=document.getElementById('yt-audio');
 function updAudioBtn(){var isA=box.classList.contains('audio');var ico=audioBtn.querySelector('.ico');if(ico)ico.textContent=isA?'\u25a3':'\u266a';audioBtn.setAttribute('data-tip',isA?'Prze\u0142\u0105cz na pe\u0142ny odtwarzacz wideo z obrazem i napisami':'Prze\u0142\u0105cz na tryb tylko-d\u017awi\u0119k (ukrywa obraz, zostawia odtwarzacz audio z rozdzia\u0142ami)');audioBtn.setAttribute('aria-label',isA?'Tryb wideo':'Tryb audio')}
-audioBtn.addEventListener('click',function(e){e.stopPropagation();var desktop=matchMedia('(min-width:1100px)').matches;if(!desktop){box.classList.toggle('audio');box.style.height='';updAudioBtn();return}var from=box.getBoundingClientRect().height;box.classList.toggle('audio');box.style.height='';var to=box.getBoundingClientRect().height;box.style.height=from+'px';void box.offsetHeight;box.classList.add('anim');box.style.height=to+'px';clearTimeout(box._animT);box._animT=setTimeout(function(){box.classList.remove('anim');box.style.height=''},460);updAudioBtn()});
+audioBtn.addEventListener('click',function(e){e.stopPropagation();var desktop=matchMedia('(min-width:1100px)').matches;if(!desktop){box.classList.toggle('audio');box.style.height='';updAudioBtn();return}
+// FLIP: keep box BOTTOM edge (= audio-ctrl bottom) visually stable during + after toggle.
+var curT=box.style.transform||'';
+var curY=parseFloat((curT.match(/translateY\(([-\d.]+)px\)/)||[0,0])[1])||0;
+var fromH=box.offsetHeight;
+var goingToAudio=!box.classList.contains('audio');
+if(goingToAudio){
+  // Preserve user-set video dimensions to restore later.
+  box._prevH=box.style.height||'';
+}
+// Suspend transitions, flip class, measure target height.
+box.classList.add('no-tr');
+box.classList.toggle('audio');
+box.style.height='';box.style.transform='';
+var toH;
+if(goingToAudio){toH=box.offsetHeight;}
+else{
+  // Restore previous video height (if user had resized).
+  if(box._prevH){box.style.height=box._prevH;toH=box.offsetHeight;}
+  else{toH=box.offsetHeight;}
+  box.style.height='';
+}
+var finalY=goingToAudio?(fromH-toH):0;
+// Seed starting state.
+box.style.height=fromH+'px';
+box.style.transform='translateY('+curY+'px)';
+void box.offsetHeight;
+// Release transitions and animate to target.
+box.classList.remove('no-tr');
+box.classList.add('anim');
+requestAnimationFrame(function(){
+  box.style.height=toH+'px';
+  box.style.transform='translateY('+finalY+'px)';
+});
+clearTimeout(box._animT);
+box._animT=setTimeout(function(){
+  box.classList.remove('anim');
+  if(goingToAudio){
+    // Keep box.h=toH and translateY to hold bottom edge visually.
+    box.style.transform='translateY('+finalY+'px)';
+  }else{
+    // Back to video: restore user's inline height (if any), clear transform.
+    box.style.height=box._prevH||'';
+    box.style.transform='';
+  }
+},380);
+updAudioBtn();});
 updAudioBtn();
 var barTimer;
 var noHover=matchMedia('(hover: none)').matches;
